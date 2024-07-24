@@ -17,7 +17,7 @@ model study_memo {
   id          Int      @id @default(autoincrement())
   study_date  DateTime @default(now()) // 学習の時間
   title       String // タイトル
-  description String @default("") // 学習の内容
+  description String @db.Text // 学習の内容
   duration    Int // 時間
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
