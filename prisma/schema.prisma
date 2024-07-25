@@ -15,10 +15,10 @@ datasource db {
 
 model study_memo {
   id          Int      @id @default(autoincrement())
-  study_date  DateTime @default(now()) // 学習の時間
+  study_date  DateTime @default(now()) @db.Timestamp(0) // 学習の時間
   title       String // タイトル
   description String @db.Text // 学習の内容
   duration    Int // 時間
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
+  created_at  DateTime @default(now()) @db.Timestamp(0)
+  updated_at  DateTime @default(now()) @db.Timestamp(0)
 }
