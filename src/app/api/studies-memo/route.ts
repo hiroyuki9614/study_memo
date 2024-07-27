@@ -3,6 +3,12 @@ import { NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
+interface CreateStudyMemoRequest {
+	title: string;
+	description: string;
+	duration: number; // フロントエンドから文字列として送信される可能性があるため
+}
+
 export async function main() {
 	try {
 		await prisma.$connect();
@@ -29,7 +35,7 @@ export const GET = async (req: Request, res: NextResponse) => {
 // Study memo取得
 export const POST = async (req: Request, res: NextResponse) => {
 	try {
-		const { title, description, duration } = await req.json();
+		const { title, description, duration }: CreateStudyMemoRequest = await req.json();
 
 		await main();
 		const studies_memo = await prisma.study_memo.create({
