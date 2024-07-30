@@ -1,16 +1,17 @@
-import "./Example.css"
+import Hello from "../component/ui/udemy-component/hello";
+import Bye from "../component/ui/udemy-component/bye";
+import Expression from "../component/ui/udemy-component/expression";
+import List from "../component/ui/udemy-component/list";
 
 const Example = () => {
+	const name="test"
 	return (
-		<div className="component">
-			<h3>Hello Component</h3>
-			<ul>
-				<li>item-1</li>
-				<li>item-2</li>
-				<li>item-3</li>
-				<li>item-4</li>
-				<li>item-5</li>
-			</ul>
-		</div>
+		<>
+			<Hello name={name} />
+			<Bye name={name} />
+			<Expression />
+		</>
 	)
 }
+
+export default Example;
