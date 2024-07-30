@@ -12,6 +12,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "types": ["styled-components"],
     "plugins": [
       {
         "name": "next"
