@@ -13,6 +13,7 @@ const Example = () => {
 	  };
 	return (
 		<>
+			<button>Click Me!</button>
 			<Button onClick={handleClick} variant="green-fill">クリックしてください</Button>
 			<Button onClick={handleClick} disabled variant="red-gradation">無効なボタン</Button>
 			<Button onClick={handleClick} type="submit" className="primary-button" variant="variantのkey名3">送信</Button>
