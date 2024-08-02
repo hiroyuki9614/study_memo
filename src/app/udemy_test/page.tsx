@@ -1,11 +1,15 @@
 "use client"
 import { useState } from "react";
+import AnimalList from "../component/ui/udemy-component/animalList";
 
 const Example = () => {
 	const animals = ["Dog", "Cat", "Rat"];
 
 	const [filterVal, setFilterVal] = useState("");
-
+	const filterdAnimals = animals.filter((animal) => {
+		const isMatch = animal.indexOf(filterVal) !== -1;
+		return isMatch;
+	})
 	return (
 		<>
 			<input
@@ -14,21 +18,7 @@ const Example = () => {
 				onChange={(e) => setFilterVal(e.target.value)}
 				className="border border-black rounded"
 			/>
-			<ul>
-				{animals
-					.filter((animal) => {
-						const isMatch = animal.indexOf(filterVal) !== -1;
-						return isMatch;
-					})
-					.map((animal) => {
-						return (
-							<li key={animal}>
-								{animal}
-								{animal === "Dog" && "★"}
-							</li>
-						);
-					})}
-			</ul>
+			<AnimalList animals={animals}/>
 		</>
 	);
 };
