@@ -1,24 +1,36 @@
-'use client'
-import Hello from "../component/ui/udemy-component/hello";
-import Bye from "../component/ui/udemy-component/bye";
-import Expression from "../component/ui/udemy-component/expression";
-import List from "../component/ui/udemy-component/list";
-import Button from "../component/ui/button/button";
+"use client"
 import { useState } from "react";
 
 const Example = () => {
-	const personObj: { name: string, age: number } = { name: "John", age: 12 }
-	const [person, setPerson] = useState(personObj);
-	console.log(person);
-	const changePerson = (e: any) => {
-		setPerson({ name: e.target.value, age: person.age});
-	}
+	const animals = ["Dog", "Cat", "Rat"];
+
+	const [filterVal, setFilterVal] = useState("");
+
 	return (
 		<>
-			<p>{person.name}</p><p>{person.age.toString()}</p>
-			<input type="text" onChange={changePerson} value={`${person.name}`} />
+			<input
+				type="text"
+				value={filterVal}
+				onChange={(e) => setFilterVal(e.target.value)}
+				className="border border-black rounded"
+			/>
+			<ul>
+				{animals
+					.filter((animal) => {
+						const isMatch = animal.indexOf(filterVal) !== -1;
+						return isMatch;
+					})
+					.map((animal) => {
+						return (
+							<li key={animal}>
+								{animal}
+								{animal === "Dog" && "★"}
+							</li>
+						);
+					})}
+			</ul>
 		</>
-	)
-}
+	);
+};
 
 export default Example;
