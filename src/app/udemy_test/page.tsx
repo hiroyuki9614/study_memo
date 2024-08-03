@@ -1,26 +1,48 @@
-"use client"
 import { useState } from "react";
-import AnimalList from "../component/ui/udemy-component/animalList";
 
+// POINT ラジオボタンの実装
 const Example = () => {
-	const animals = ["Dog", "Cat", "Rat"];
+  const [fruit, setFruit] = useState("Apple");
+  const onChange = (e) => setFruit(e.target.value);
 
-	const [filterVal, setFilterVal] = useState("");
-	const filterdAnimals = animals.filter((animal) => {
-		const isMatch = animal.indexOf(filterVal) !== -1;
-		return isMatch;
-	})
-	return (
-		<>
-			<input
-				type="text"
-				value={filterVal}
-				onChange={(e) => setFilterVal(e.target.value)}
-				className="border border-black rounded"
-			/>
-			<AnimalList animals={animals}/>
-		</>
-	);
+  const RADIO_COLLECTION = ["Apple", "Banana", "Cherry"];
+
+  return (
+    <>
+      {RADIO_COLLECTION.map((value) => {
+        return (
+          <label key={value}>
+            <input
+              type="radio"
+              value={value}
+              checked={fruit === value}
+              onChange={onChange}
+            />
+            {value}
+          </label>
+        );
+      })}
+      {/* <label>
+        <input
+          type="radio"
+          value="Banana"
+          checked={fruit === "Banana"}
+          onChange={onChange}
+        />
+        Banana
+      </label>
+      <label>
+        <input
+          type="radio"
+          value="Cherry"
+          checked={fruit === "Cherry"}
+          onChange={onChange}
+        />
+        Cherry
+      </label> */}
+      <h3>私は{fruit}がたべたい</h3>
+    </>
+  );
 };
 
 export default Example;

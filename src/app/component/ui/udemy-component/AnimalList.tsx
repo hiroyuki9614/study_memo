@@ -1,23 +1,20 @@
 import React from 'react';
+import AnimalItem from './AnimalItem';
 
 interface AnimalListProps {
 	animals: string[];
 }
 
 const AnimalList: React.FC<AnimalListProps> = ({ animals }) => {
+	if (animals.length === 0 ) {
+		return <h3>アニマルが見つからへん。</h3>
+	}
 	return (
 		<ul>
 			{animals
-				.filter((animal) => {
-					const isMatch = animal.indexOf(filterVal) !== -1;
-					return isMatch;
-				})
 				.map((animal) => {
 					return (
-						<li key={animal}>
-							{animal}
-							{animal === "Dog" && "★"}
-						</li>
+						<AnimalItem animal={animal} key={animal} />
 					);
 				})}
 		</ul>
