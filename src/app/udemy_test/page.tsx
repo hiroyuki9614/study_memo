@@ -1,48 +1,21 @@
-import { useState } from "react";
+"use client"
+import ToDo from '../component/ui/udemy-component/ToDo'
+// import { Input } from "postcss";
+import React, { FormEvent, useState } from 'react';
 
-// POINT ラジオボタンの実装
-const Example = () => {
-  const [fruit, setFruit] = useState("Apple");
-  const onChange = (e) => setFruit(e.target.value);
+const ToDoApp = () => {
+	const [task, setTask] = useState<string>("");
+	let taskLists: string | any = [];
+	const pushTask = (e: any) => {
+		const inputVal = e.target.value;
+		const newTodo = taskLists.push(inputVal);
+	};
+	return (
+		<div className="flex flex-col items-center justify-center mt-8 min-h-80 border border-black rounded-lg">
+			<h1 className="text-3xl">Reminder</h1>
+			<ToDo />
+		</div>
+	)
+}
 
-  const RADIO_COLLECTION = ["Apple", "Banana", "Cherry"];
-
-  return (
-    <>
-      {RADIO_COLLECTION.map((value) => {
-        return (
-          <label key={value}>
-            <input
-              type="radio"
-              value={value}
-              checked={fruit === value}
-              onChange={onChange}
-            />
-            {value}
-          </label>
-        );
-      })}
-      {/* <label>
-        <input
-          type="radio"
-          value="Banana"
-          checked={fruit === "Banana"}
-          onChange={onChange}
-        />
-        Banana
-      </label>
-      <label>
-        <input
-          type="radio"
-          value="Cherry"
-          checked={fruit === "Cherry"}
-          onChange={onChange}
-        />
-        Cherry
-      </label> */}
-      <h3>私は{fruit}がたべたい</h3>
-    </>
-  );
-};
-
-export default Example;
+export default ToDoApp;
