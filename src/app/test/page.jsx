@@ -13,7 +13,12 @@ class Book {
 		return false;
 	}
 	returnBook() {
-
+		if (this.isCheckedOut) {
+			this.isCheckedOut = false;
+			return false;
+		}
+		return true;
+	}
 	}
 }
 
