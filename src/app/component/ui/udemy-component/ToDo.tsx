@@ -28,10 +28,13 @@ const Todo = () => {
 		});
 		setTodos(newTodos);
 	}
+	const createTodo = (todo: Todo) => {
+		setTodos([...todos, todo]);
+	}
 	return (
 		<div className="mb-5">
 			<List todos={todos} deleteTodos={deleteTodos} />
-			<Form />
+			<Form createTodo={createTodo} />
 		</div>
 	)
 };
