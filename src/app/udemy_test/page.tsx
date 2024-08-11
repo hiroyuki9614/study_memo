@@ -1,39 +1,20 @@
-"use client"
-import { useReducer, useState } from "react"
+import { useEffect, useState } from "react";
 
 const Example = () => {
-  const [state, setState] = useState(0);
+  const [time, setTime] = useState(0);
 
-  const [rstate, dispatch] = useReducer((prev, action) => {
-    if(action === '+') {
-      return ++prev;
-    } else if (action === '-') {
-      return --prev;
-    }
-  }, 0);
-  const countUp = () => {
-    setState(prev => {
-      return prev = ++prev;
-    })
-  }
-  const rcountUp = () => {
-    dispatch('+');
-  }
-  const rcountDown = () => {
-    dispatch('-');
-  }
+  useEffect(() => {
+    console.log('useEffect is called');
+    window.setInterval(() => {
+      setTime(prev => prev + 1);
+    }, 1000);
+  }, [])
+
   return (
-    <>
-      <div>
-        <h3>{state}</h3>
-        <button onClick={countUp}>+</button>
-      </div>
-      <div>
-        <h3>{rstate}</h3>
-        <button onClick={rcountUp}>+</button>
-        <button onClick={rcountDown}>-</button>
-      </div>
-    </>
+    <h3>
+      <time>{time}</time>
+      <span>秒経過</span>
+    </h3>
   );
 };
 
