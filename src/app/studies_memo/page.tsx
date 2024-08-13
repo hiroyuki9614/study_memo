@@ -20,16 +20,16 @@ export default function App() {
 
 	return (
 		/* "handleSubmit" will validate your inputs before invoking "onSubmit" */
-		<form onSubmit={handleSubmit(onSubmit)}>
+		<form onSubmit={handleSubmit(onSubmit)} className="flex w-60">
 			{/* register your input into the hook by invoking the "register" function */}
-			<input defaultValue="test" {...register("example")} />
+			<input defaultValue="test" {...register("example")} className="border" />
 
 			{/* include validation with required or other standard HTML validation rules */}
-			<input {...register("exampleRequired", { required: true })} />
+			<input {...register("exampleRequired", { required: true })} className="border" />
 			{/* errors will return when field validation fails  */}
 			{errors.exampleRequired && <span>This field is required</span>}
 
-			<input type="submit" />
+			<input type="submit" className="border" />
 		</form>
 	)
 }
