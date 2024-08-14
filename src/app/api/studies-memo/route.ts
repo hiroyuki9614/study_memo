@@ -1,6 +1,7 @@
 "use server"
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
+import { ENDPOINT } from '@/constants';
 
 const prisma = new PrismaClient();
 
@@ -34,10 +35,12 @@ export const GET = async (req: Request, res: NextResponse) => {
 };
 
 // Study memo取得
-export const POST = async (req: Request, res: NextResponse) => {
+export const createPost = async (createPost: any) => {
+	const duration = createPost.get('duration');
+	const title = createPost.get('title');
+	const description = createPost.get('description');
+	console.log(duration, title);
 	try {
-		const { title, description, duration }: CreateStudyMemoRequest = await req.json();
-
 		await main();
 		const studies_memo = await prisma.study_memo.create({
 			data: {
@@ -46,10 +49,10 @@ export const POST = async (req: Request, res: NextResponse) => {
 				duration,
 			},
 		});
-		return NextResponse.json({ message: 'success', studies_memo }, { status: 201 });
+		return { message: 'success', studies_memo };
 	} catch (err) {
 		console.error(err);
-		return NextResponse.json({ message: 'Error', err }, { status: 500 });
+		return { error: '学習メモの作成に失敗しました' };
 	} finally {
 		await prisma.$disconnect();
 	}
