@@ -1,7 +1,7 @@
 "use server"
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
-import { ENDPOINT } from '@/constants';
+// import { ENDPOINT } from '@/constants';
 
 const prisma = new PrismaClient();
 
@@ -36,7 +36,7 @@ export const GET = async (req: Request, res: NextResponse) => {
 
 // Study memo取得
 export const createPost = async (createPost: any) => {
-	const duration = createPost.get('duration');
+	const duration = parseInt(createPost.get('duration') as string, 10);
 	const title = createPost.get('title');
 	const description = createPost.get('description');
 	console.log(duration, title);

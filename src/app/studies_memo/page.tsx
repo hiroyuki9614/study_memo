@@ -1,35 +1,33 @@
 "use client";
 
 import { useForm, SubmitHandler } from "react-hook-form"
+import InputText from "../component/ui/form/input-text"
 
 type Inputs = {
-	example: string
-	exampleRequired: string
+  title: string;
+  // 他のフィールドもここに追加
 }
 
 export default function App() {
-	const {
-		register,
-		handleSubmit,
-		watch,
-		formState: { errors },
-	} = useForm<Inputs>()
-	const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>()
 
-	console.log(watch("example")) // watch input value by passing the name of it
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
 
-	return (
-		/* "handleSubmit" will validate your inputs before invoking "onSubmit" */
-		<form onSubmit={handleSubmit(onSubmit)} className="flex w-60">
-			{/* register your input into the hook by invoking the "register" function */}
-			<input defaultValue="test" {...register("example")} className="border" />
-
-			{/* include validation with required or other standard HTML validation rules */}
-			<input {...register("exampleRequired", { required: true })} className="border" />
-			{/* errors will return when field validation fails  */}
-			{errors.exampleRequired && <span>This field is required</span>}
-
-			<input type="submit" className="border" />
-		</form>
-	)
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="flex w-60">
+      <InputText
+        id="title"
+        title="タイトル"
+        name="title"
+        register={register}
+        errors={errors}
+        required
+      />
+      <button type="submit">送信</button>
+    </form>
+  )
 }
