@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm, SubmitHandler } from "react-hook-form"
-import InputText from "../component/ui/form/input-text"
+import InputText from "../component/ui/inputText/index"
 
 type Inputs = {
   title: string;
