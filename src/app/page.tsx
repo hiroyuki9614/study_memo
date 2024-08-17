@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import CreateStudiesMemo from '@/app/create/page';
+import CreateStudiesMemo from './component/ui/form/index';
 
 const getAllStudiesData = async () => {
 	try {

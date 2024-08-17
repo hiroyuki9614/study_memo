@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import React, { FormEvent } from 'react';
 import {createPost} from '../api/studies-memo/route'
+import Button from '../component/ui/button/index';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 const CreateStudiesMemo = () => {
 	const [title, setTitle] = useState('');
@@ -36,7 +38,9 @@ const CreateStudiesMemo = () => {
 				<input type='text' onChange={(e) => setTitle(e.target.value)} name='title' placeholder='タイトル' required />
 				<input type='number' onChange={(e) => setDuration(e.target.value)} name='duration' placeholder='学習時間' required />
 				<textarea name='description' onChange={(e) => setDescription(e.target.value)} rows={15} placeholder='学習内容' required></textarea>
-				<button type='submit'>作成</button>
+				<Button icon={faUser} variant="secondary">
+					送信
+				</Button>
 			</form>
 		</div>
 	);

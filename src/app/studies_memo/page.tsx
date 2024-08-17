@@ -3,6 +3,7 @@
 import { useForm, SubmitHandler } from "react-hook-form"
 import InputText from "../component/ui/inputText/index"
 
+
 type Inputs = {
   title: string;
   // 他のフィールドもここに追加
