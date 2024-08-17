@@ -2,14 +2,14 @@
 
 import { useForm, SubmitHandler } from "react-hook-form"
 import InputText from "../component/ui/inputText/index"
-
+import InputTextArea from "../component/ui/text-area/index"
 
 type Inputs = {
   title: string;
   // 他のフィールドもここに追加
 }
 
-export default function App() {
+export default function PostStudiesMemoForm() {
   const {
     register,
     handleSubmit,
@@ -28,6 +28,13 @@ export default function App() {
         errors={errors}
         required
       />
+      <InputTextArea
+              id="title"
+              title="タイトル"
+              name="title"
+              register={register}
+              errors={errors}
+              required />
       <button type="submit">送信</button>
     </form>
   )
