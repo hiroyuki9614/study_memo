@@ -1,7 +1,9 @@
 "use server"
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
+import { revalidatePath } from "next/cache"
 // import { ENDPOINT } from '@/constants';
+import { connectDB } from '../../../../utils/db';
 
 const prisma = new PrismaClient();
 
@@ -11,20 +13,10 @@ interface CreateStudyMemoRequest {
 	duration: number; // フロントエンドから文字列として送信される可能性があるため
 }
 
-export async function main() {
-	try {
-		await prisma.$connect();
-		console.log('DB接続に成功しました。');
-	} catch (err) {
-		return Error('DB接続に失敗しました');
-	} finally {
-	}
-}
-
 // Study memo取得
 export const GET = async (req: Request, res: NextResponse) => {
 	try {
-		await main();
+		await connectDB();
 		const studies_memo = await prisma.study_memo.findMany();
 		return NextResponse.json({ message: 'success', studies_memo }, { status: 200 });
 	} catch (err) {
@@ -41,7 +33,7 @@ export const createPost = async (createPost: any) => {
 	const description = createPost.get('description');
 	console.log(duration, title);
 	try {
-		await main();
+		await connectDB();
 		const studies_memo = await prisma.study_memo.create({
 			data: {
 				title,
@@ -49,6 +41,7 @@ export const createPost = async (createPost: any) => {
 				duration,
 			},
 		});
+		revalidatePath('/')
 		return { message: 'success', studies_memo };
 	} catch (err) {
 		console.error(err);

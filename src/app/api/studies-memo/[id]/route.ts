@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
+import { connectDB } from '../../../../../utils/db';
 
 const prisma = new PrismaClient();
 
@@ -9,20 +10,10 @@ interface CreateStudyMemoRequest {
 	duration: number; // フロントエンドから文字列として送信される可能性があるため
 }
 
-export async function main() {
-	try {
-		await prisma.$connect();
-		console.log('DB接続に成功しました。');
-	} catch (err) {
-		return Error('DB接続に失敗しました');
-	} finally {
-	}
-}
-
 // Study memo Read取得
 export const GET = async (req: Request, { params }: { params: { id: string } }) => {
 	try {
-		await main();
+		await connectDB();
 		const post = await prisma.study_memo.findUnique({
 			where: {
 				id: Number(params?.id),
@@ -38,6 +29,7 @@ export const GET = async (req: Request, { params }: { params: { id: string } }) 
 
 export const UPDATE = async (req: Request, { params }: { params: { id: string } }) => {
 	try {
+		await connectDB();
 		const post = await prisma.study_memo.findUnique({
 			where: {
 				id: Number(params?.id),
@@ -53,6 +45,7 @@ export const UPDATE = async (req: Request, { params }: { params: { id: string } 
 
 export const DELETE = async (req: Request, { params }: { params: { id: string } }) => {
 	try {
+		await connectDB();
 		const post = await prisma.study_memo.delete({
 			where: {
 				id: Number(params?.id),

@@ -1,5 +1,4 @@
 "use client";
-
 import { useForm, SubmitHandler } from "react-hook-form"
 import InputText from "../inputText/index"
 import InputTextArea from "../text-area";
@@ -16,10 +15,10 @@ export default function CreateStudiesMemo() {
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: { errors },
 	} = useForm<Inputs>()
-
-	const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
+	const onSubmit: SubmitHandler<Inputs> = () => reset();
 
 	return (
 		<form action={createPost}>
@@ -48,7 +47,7 @@ export default function CreateStudiesMemo() {
 				register={register}
 				errors={errors}
 				required />
-			<Button icon={faUser} type="submit" variant="primary">
+			<Button icon={faUser} type="submit" variant="primary" onClick={() => reset()}>
 				送信
 			</Button>
 		</form>
