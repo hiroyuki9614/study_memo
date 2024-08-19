@@ -1,57 +1,44 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+import 'dayjs/locale/ja';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.locale('ja');
 
 interface StudyData {
-  _id: string;
-  title: string;
-  duration: number;
-  description: string;
-  month: number; // 月の情報を追加
+	_id: string;
+	title: string;
+	duration: number;
+	description: string;
+	created_at: string;
 }
 
 interface MonthlyStudiesProps {
-  month: number;
-  studies: StudyData[];
+	allStudiesData: any
 }
 
-const MonthlyStudies: React.FC<MonthlyStudiesProps> = ({ month, studies }) => (
-  <li>
-    <h3>{month}月の学習内容</h3>
-    <ul>
-      {studies.map((study_data) => (
-        <li key={study_data._id}>
-          <span>学習内容: {study_data.title}</span>
-          <span>{study_data.duration}h</span>
-          <p>{study_data.created_at}</p>
-        </li>
-      ))}
-    </ul>
-  </li>
-);
-
-const ReadAllStudiesData: React.FC<{ allStudiesData: StudyData[] }> = ({ allStudiesData }) => {
-  const studiesByMonth = allStudiesData.reduce((acc, study) => {
-    if (!acc[study.month]) {
-      acc[study.month] = [];
-    }
-    acc[study.month].push(study);
-    return acc;
-  }, {} as Record<number, StudyData[]>);
-
-  return (
-    <div className='grid-container-in'>
-      <ul>
-        <li>
-          <h2>2024年の学習内容</h2>
-          <ul>
-            {Object.entries(studiesByMonth).map(([month, studies]) => (
-              <MonthlyStudies key={month} month={Number(month)} studies={studies} />
-            ))}
-          </ul>
-        </li>
-      </ul>
-    </div>
-  );
+const ReadAllStudiesData: React.FC<MonthlyStudiesProps> = ({ allStudiesData }) => {
+	console.log(allStudiesData[0]?.created_at);
+	const formattedDate = dayjs(allStudiesData[0]?.created_at).format('YYYY年MM月');
+	console.log(formattedDate);
+	return (
+		<li>
+			<h3>{}月の学習内容</h3>
+			<ul>
+				{allStudiesData.map((studyData: any) => (
+					<li key={studyData._id}>
+						<span>学習内容: {studyData.title}</span>
+						<span>{studyData.duration}h</span>
+						<p>{studyData.created_at}</p>
+					</li>
+				))}
+			</ul>
+		</li>
+	)
 };
 
 export default ReadAllStudiesData;

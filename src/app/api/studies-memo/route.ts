@@ -10,7 +10,7 @@ const prisma = new PrismaClient();
 interface CreateStudyMemoRequest {
 	title: string;
 	description: string;
-	duration: number; // フロントエンドから文字列として送信される可能性があるため
+	duration: number;
 }
 
 // Study memo取得
@@ -27,7 +27,7 @@ export const GET = async (req: Request, res: NextResponse) => {
 };
 
 // Study memo取得
-export const createPost = async (createPost: any) => {
+export const POST = async (createPost: any) => {
 	const duration = parseInt(createPost.get('duration') as string, 10);
 	const title = createPost.get('title');
 	const description = createPost.get('description');

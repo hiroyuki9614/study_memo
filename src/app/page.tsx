@@ -3,6 +3,7 @@ import Image from 'next/image';
 import CreateStudiesMemo from './component/ui/form/index';
 import ReadAllStudiesData from './component/ui/studiesList/index'
 
+
 const getAllStudiesData = async () => {
 	try {
 		const response = await fetch('http://localhost:3000/api/studies-memo', { cache: 'no-store' });
