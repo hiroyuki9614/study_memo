@@ -26,6 +26,7 @@ const ReadAllStudiesData: React.FC<MonthlyStudiesProps> = ({ allStudiesData }) =
 	const formattedDate = dayjs(allStudiesData[0]?.created_at).format('YYYY年MM月');
 	console.log(formattedDate);
 	allStudiesData.map((study) => {
+		i+
 		console.log(dayjs(study.created_at).format('YYYY-MM'));
 		const monthlyStudyData = dayjs(study.created_at).format('YYYY-MM');
 		if(monthlyStudyData == '2024-07') {
