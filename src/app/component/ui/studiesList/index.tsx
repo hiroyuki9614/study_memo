@@ -22,16 +22,20 @@ interface MonthlyStudiesProps {
 }
 
 const ReadAllStudiesData: React.FC<MonthlyStudiesProps> = ({ allStudiesData }) => {
-	// console.log('Studies with created_at:', allStudiesData.filter(study => study.created_at));
 	const studiesByMonth = allStudiesData.reduce((acc, study) => {
-		if (study.created_at) {
 			const month = dayjs(study.created_at).format('MM');
+			// monthというkeyを作って空の配列を割り当てる
 			if (!acc[month]) acc[month] = [];
 			acc[month].push(study);
-		}
 		return acc;
-	}, {});
-	console.log('studiesByMonth:', studiesByMonth);
+	},);
+	const monthlyStudies = {};
+	for (let i = 1; i <= 12; i++) {
+		const monthKey = i <= 9 ? `0${i}` : `${i}`;
+		const monthData = studiesByMonth[monthKey] || [];
+		monthlyStudies[monthKey] = monthData;
+	  }
+	console.log('monthlyStudies:', monthlyStudies);
 
 	return (
 		<li>
