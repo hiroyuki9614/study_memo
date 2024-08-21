@@ -22,20 +22,20 @@ interface MonthlyStudiesProps {
 }
 
 const ReadAllStudiesData: React.FC<MonthlyStudiesProps> = ({ allStudiesData }) => {
-	console.log(allStudiesData[0]?.created_at);
-	const formattedDate = dayjs(allStudiesData[0]?.created_at).format('YYYY年MM月');
-	console.log(formattedDate);
-	allStudiesData.map((study) => {
-		i+
-		console.log(dayjs(study.created_at).format('YYYY-MM'));
-		const monthlyStudyData = dayjs(study.created_at).format('YYYY-MM');
-		if(monthlyStudyData == '2024-07') {
-			console.log("hoge")
+	// console.log('Studies with created_at:', allStudiesData.filter(study => study.created_at));
+	const studiesByMonth = allStudiesData.reduce((acc, study) => {
+		if (study.created_at) {
+			const month = dayjs(study.created_at).format('MM');
+			if (!acc[month]) acc[month] = [];
+			acc[month].push(study);
 		}
-	})
+		return acc;
+	}, {});
+	console.log('studiesByMonth:', studiesByMonth);
+
 	return (
 		<li>
-			<h3>{}月の学習内容</h3>
+			<h3>{ }月の学習内容</h3>
 			<ul>
 				{allStudiesData.map((studyData: any) => (
 					<li key={studyData._id}>
