@@ -1,17 +1,30 @@
 <link rel="stylesheet" href="./test.css" type="text/css" />
-
-<article class="article">
-	<div key="{month}" class="wrapper">
-		<button class="heading">1月の学習内容</button>
-		<ul>
-			<li key="{studyData._id}">
-				<p><span>記録した時間:</span></p>
-				<p><span>タイトル:</span><span>勉強したこと</span></p>
-				<p><span>学習時間:</span><span>2</span></p>
-				<p>
-					<span>学習内容:</span><span>色々やったけど身になったものは<br />何もなかった。</span>
-				</p>
-			</li>
-		</ul>
-	</div>
-</article>
+<div class="container">
+	<article class="study-record">
+		<h2 class="study-record__month">1月の学習内容</h2>
+		<div>
+			<ul class="study-record__list">
+				<li class="study-item">
+					<h3 class="study-item__title">勉強したこと</h3>
+					<dl class="study-item__details">
+						<div class="study-item__detail">
+							<dt class="label">記録した時間:</dt>
+							<dd>2024-08-07</dd>
+						</div>
+						<div class="study-item__detail">
+							<dt class="label">学習時間:</dt>
+							<dd>2時間</dd>
+						</div>
+						<div class="study-item__detail">
+							<dt class="label">学習内容:</dt>
+							<dd>
+								色々やったけど身になったものは<br />
+								何もなかった。
+							</dd>
+						</div>
+					</dl>
+				</li>
+			</ul>
+		</div>
+	</article>
+</div>

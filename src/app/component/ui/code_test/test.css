@@ -1,4 +1,61 @@
-.article {
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    align-items: center;
+    box-sizing: border-box;
     display: flex;
     justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.study-record {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    max-width: 600px;
+    padding: 20px;
+    width: 100%;
+}
+
+.study-record__month {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.study-record__list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.study-item {
+    margin-bottom: 20px;
+}
+
+.study-item__title {
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.study-item__details {
+    margin: 0;
+}
+
+.study-item__detail {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.label {
+    font-weight: bold;
+    min-width: 120px;
+}
+
+dd {
+    margin-left: 0;
 }
