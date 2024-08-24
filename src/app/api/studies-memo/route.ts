@@ -1,7 +1,7 @@
-"use server"
+'use server';
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
-import { revalidatePath } from "next/cache"
+import { revalidatePath } from 'next/cache';
 // import { ENDPOINT } from '@/constants';
 import { connectDB } from '../../../../utils/db';
 
@@ -31,7 +31,6 @@ export const POST = async (createPost: any) => {
 	const duration = parseInt(createPost.get('duration') as string, 10);
 	const title = createPost.get('title');
 	const description = createPost.get('description');
-	console.log(duration, title);
 	try {
 		await connectDB();
 		const studies_memo = await prisma.study_memo.create({
@@ -41,7 +40,7 @@ export const POST = async (createPost: any) => {
 				duration,
 			},
 		});
-		revalidatePath('/')
+		revalidatePath('/');
 		return { message: 'success', studies_memo };
 	} catch (err) {
 		console.error(err);

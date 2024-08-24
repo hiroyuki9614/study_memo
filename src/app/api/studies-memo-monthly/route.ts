@@ -11,7 +11,7 @@ dayjs.extend(timezone);
 const prisma = new PrismaClient();
 
 // 月ごとのデータを取得する
-export const GET_DATA_MONTHLY = async (req: Request, res: NextResponse) => {
+export const GET = async (req: Request, res: NextResponse) => {
 	try {
 		await connectDB();
 		const url = new URL(req.url);
