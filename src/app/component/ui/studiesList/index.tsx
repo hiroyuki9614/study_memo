@@ -20,13 +20,12 @@ interface StudyData {
 
 interface MonthlyStudiesProps {
 	allStudiesData: StudyData[];
+	year: number;
 }
 
-const ReadAllStudiesData: React.FC<MonthlyStudiesProps> = ({ allStudiesData }) => {
+const ReadAllStudiesData: React.FC<MonthlyStudiesProps> = ({ allStudiesData, year }) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	// 学習時間を月ごとに分ける
-	const year = allStudiesData.filter((s) => s.created_at.indexOf('2024'));
-	console.log({ ...allStudiesData });
 	const studiesByMonth = allStudiesData.reduce((acc, study) => {
 		const month = dayjs(study.created_at).format('MM');
 		if (!acc[month]) acc[month] = [];
@@ -49,7 +48,7 @@ const ReadAllStudiesData: React.FC<MonthlyStudiesProps> = ({ allStudiesData }) =
 	return (
 		<article className='flex items-center box-border flex-col justify-center min-h-screen p-5'>
 			<div className='bg-slate-50 rounded-2xl shadow shadow-slate-500 mb-4 p-4 w-10/12'>
-				<h2 className='study-record__month'>{}年の学習内容</h2>
+				<h2 className='study-record__month'>{year}年の学習内容</h2>
 			</div>
 			<p>{}</p>
 			{sortedMonths.map((month) => (

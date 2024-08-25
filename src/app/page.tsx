@@ -4,19 +4,28 @@ import CreateStudiesMemo from './component/ui/form/index';
 import ReadAllStudiesData from './component/ui/studiesList/index';
 
 const getStudiesDataThisYear = async () => {
+	const now = new Date();
+	const year = now.getFullYear();
+	const startDate = year + '-01-01';
+	const endDate = year + '-12-31';
+	console.log(startDate);
 	try {
-		const response = await fetch('http://localhost:3000/api/studies-memo', { cache: 'no-store' });
+		const response = await fetch(`http://localhost:3000/api/studies-memo-monthly?startDate=${startDate}&endDate=${endDate}`, { cache: 'no-store' });
 		const jsonData = await response.json();
-		const AllStudiesData = jsonData.studies_memo;
-		return AllStudiesData;
+		const StudiesDataThisYear = jsonData.studies_memo;
+		return StudiesDataThisYear;
 	} catch (err) {
 		console.error(err);
 		return [];
 	}
 };
 const getStudiesDataLastYear = async () => {
+	const now = new Date();
+	const lastYear = now.getFullYear() - 1;
+	const startDate = lastYear + '-01-01';
+	const endDate = lastYear + '-12-31';
 	try {
-		const response = await fetch('http://localhost:3000/api/studies-memo', { cache: 'no-store' });
+		const response = await fetch(`http://localhost:3000/api/studies-memo-monthly?startDate=${startDate}&endDate=${endDate}`, { cache: 'no-store' });
 		const jsonData = await response.json();
 		const AllStudiesData = jsonData.studies_memo;
 		return AllStudiesData;
@@ -27,11 +36,15 @@ const getStudiesDataLastYear = async () => {
 };
 
 const App = async () => {
+	const now = new Date();
+	const year = now.getFullYear();
+	const lastYear = now.getFullYear() - 1;
 	const allStudiesData = await getStudiesDataThisYear();
+	const lastStudiesData = await getStudiesDataLastYear();
 	return (
 		<div className='grid-container-in'>
-			<ReadAllStudiesData allStudiesData={allStudiesData} />
-			{/* <CreateStudiesMemo /> */}
+			<ReadAllStudiesData allStudiesData={lastStudiesData} year={lastYear} />
+			<ReadAllStudiesData allStudiesData={allStudiesData} year={year} />
 		</div>
 	);
 };
