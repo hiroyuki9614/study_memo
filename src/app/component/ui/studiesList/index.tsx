@@ -24,8 +24,18 @@ interface MonthlyStudiesProps {
 }
 
 const ReadAllStudiesData: React.FC<MonthlyStudiesProps> = ({ allStudiesData, year }) => {
-	const [isOpenYear, setIsOpenYear] = useState<boolean>(false);
-	const [openMonths, setOpenMonths] = useState<Record<string, boolean>>({});
+	const currentYear = dayjs().year();
+	const currentMonth = dayjs().format('MM');
+
+	const isThisYear = year === currentYear;
+	const [isOpenYear, setIsOpenYear] = useState<boolean>(isThisYear);
+	const [openMonths, setOpenMonths] = useState<Record<string, boolean>>(() => {
+		// 今年の場合、現在の月を開いた状態にする
+		if (isThisYear) {
+			return { [currentMonth]: true };
+		}
+		return {};
+	});
 	// 学習時間を月ごとに分ける
 	const studiesByMonth = allStudiesData.reduce((acc, study) => {
 		const month = dayjs(study.created_at).format('MM');
@@ -58,16 +68,16 @@ const ReadAllStudiesData: React.FC<MonthlyStudiesProps> = ({ allStudiesData, yea
 	return (
 		<article className='flex items-center box-border flex-col justify-center pt-2'>
 			<div className='bg-slate-50 rounded-2xl shadow shadow-slate-500 mb-4 p-4 w-10/12' onClick={handleYearClick}>
-				<h2 className='study-record__month'>{year}年の学習内容</h2>
+				<h2 className=''>{year}年の学習内容</h2>
 			</div>
 			{isOpenYear &&
 				sortedMonths.map((month) => (
 					<div key={month} className='bg-slate-50 rounded-2xl shadow shadow-slate-500 mb-4 p-4 w-10/12'>
-						<h2 className='text-lg text-center pb-3' onClick={() => handleMonthClick(month)}>
+						<h2 className='text-center' onClick={() => handleMonthClick(month)}>
 							{parseInt(month)}月の学習内容
 						</h2>
 						{openMonths[month] && (
-							<div className=''>
+							<div className='pt-3'>
 								{monthlyStudies[month].length > 0 ? (
 									<ul>
 										{monthlyStudies[month].map((studyData) => (
