@@ -43,8 +43,8 @@ const App = async () => {
 	const lastStudiesData = await getStudiesDataLastYear();
 	return (
 		<div className='grid-container-in'>
-			<ReadAllStudiesData allStudiesData={lastStudiesData} year={lastYear} />
-			<ReadAllStudiesData allStudiesData={allStudiesData} year={year} />
+			<ReadAllStudiesData key={`studies-${lastYear}`} allStudiesData={lastStudiesData} year={lastYear} />
+			<ReadAllStudiesData key={`studies-${year}`} allStudiesData={allStudiesData} year={year} />
 		</div>
 	);
 };

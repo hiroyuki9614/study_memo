@@ -80,8 +80,8 @@ const ReadAllStudiesData: React.FC<MonthlyStudiesProps> = ({ allStudiesData, yea
 							<div className='pt-3'>
 								{monthlyStudies[month].length > 0 ? (
 									<ul>
-										{monthlyStudies[month].map((studyData) => (
-											<li key={studyData._id} className='[&:not(:last-child)]:border-b border-1 px-2 p-4'>
+										{monthlyStudies[month].map((studyData, index) => (
+											<li key={`${month}-${index}-${studyData.created_at}`} className='[&:not(:last-child)]:border-b border-1 px-2 p-4'>
 												<dl>
 													<div>
 														<dt>記録日時:</dt>
