@@ -67,7 +67,7 @@ const ReadAllStudiesData: React.FC<MonthlyStudiesProps> = ({ allStudiesData, yea
 	};
 	return (
 		<article className='flex items-center box-border flex-col justify-center pt-2'>
-			<div className='bg-slate-50 rounded-2xl shadow shadow-slate-500 mb-4 p-4 w-10/12' onClick={handleYearClick}>
+			<div className='bg-slate-50 rounded-2xl shadow shadow-slate-500 mb-4 p-3 w-10/12' onClick={handleYearClick}>
 				<h2 className=''>{year}年の学習内容</h2>
 			</div>
 			{isOpenYear &&
