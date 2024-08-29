@@ -3,6 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartBar, faPlus, faHome } from '@fortawesome/free-solid-svg-icons';
+import DialogSample from '../modal/index';
 
 export default function FooterNav() {
 	return (
@@ -15,10 +16,11 @@ export default function FooterNav() {
 					</Link>
 				</li>
 				<li className='w-1/3'>
-					<Link href='#' className='flex flex-col items-center'>
-						<FontAwesomeIcon icon={faPlus} size='xl' />
-						<span className='text-xs mt-1'>ADD</span>
-					</Link>
+					<div className='flex flex-col items-center'>
+						<DialogSample icon={faPlus} size={'2x'}>
+							ADD
+						</DialogSample>
+					</div>
 				</li>
 				<li className='w-1/3'>
 					<Link href='/' className='flex flex-col items-center'>
