@@ -4,6 +4,9 @@ import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { twJoin, twMerge } from 'tailwind-merge';
+import InputText from '../inputText/index';
+import Button from '../button/index';
+import { useForm } from 'react-hook-form';
 
 // クライアントサイドで大きさを制限
 type Size = 'base' | 'lg' | 'sm' | 'xl' | 'xs';
@@ -50,21 +53,41 @@ type DialogSampleProps = ButtonHTMLAttributes<HTMLButtonElement> &
 
 export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(({ children, className, icon, iconPosition = 'left', size = 'base', type = 'button', variant = 'primary', ...props }, ref) => {
 	const dialogRef = useRef<HTMLDialogElement>(null);
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm(); // 追加
+
 	const handleShowModal = () => dialogRef.current?.showModal();
 	const handleCloseModal = () => dialogRef.current?.close();
 	const iconComponent = icon ? <FontAwesomeIcon className={twJoin(children && 'flex-none')} fixedWidth={true} icon={icon} size='xl' /> : null;
 
+	const onSubmit = (data) => {
+		console.log(data);
+		// ここでフォームデータの処理を行う
+		handleCloseModal();
+	};
 	return (
 		<>
 			<button ref={ref} type={type} className={twMerge('', icon && (children ? `${ICON_SIZES[size]} ${ICON_POSITION[iconPosition]}` : ICON_SIZES[size]), className)} onClick={handleShowModal} {...props}>
 				{iconComponent}
 				<p className='text-xs mt-1'>{children}</p>
 			</button>
-			<dialog ref={dialogRef}>
-				<h1>HELLO MODAL !!</h1>
-				<button type='button' onClick={handleCloseModal}>
+			<dialog ref={dialogRef} className='w-10/12 h-4/5'>
+				<div className='flex justify-center mt-5'>
+					<h1>HELLO MODAL !!</h1>
+				</div>
+				<Button className='h-[1px]' type='button' onClick={handleCloseModal}>
 					Close Modal
-				</button>
+				</Button>
+				<form onSubmit={handleSubmit(onSubmit)}>
+					<InputText id='title' title='Title' name='title' register={register} errors={errors} required={true} type='text' />
+					<Button type='submit'>Submit</Button> {/* 追加 */}
+				</form>
+				<Button type='button' onClick={handleCloseModal}>
+					Close Modal
+				</Button>
 			</dialog>
 		</>
 	);
