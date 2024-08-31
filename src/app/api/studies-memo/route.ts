@@ -1,8 +1,7 @@
 'use server';
 import { PrismaClient } from '@prisma/client';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
-// import { ENDPOINT } from '@/constants';
 import { connectDB } from '../../../../utils/db';
 
 const prisma = new PrismaClient();
@@ -12,7 +11,6 @@ interface CreateStudyMemoRequest {
 	description: string;
 	duration: number;
 }
-
 // Study memo取得
 export const GET = async (req: Request, res: NextResponse) => {
 	try {

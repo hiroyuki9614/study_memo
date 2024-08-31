@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import CreateStudiesMemo from './component/ui/form/index';
 import ReadAllStudiesData from './component/ui/studiesList/index';
+import Form from './component/ui/form/index';
 
 const getStudiesDataThisYear = async () => {
 	const now = new Date();
@@ -43,6 +44,7 @@ const App = async () => {
 	const lastStudiesData = await getStudiesDataLastYear();
 	return (
 		<div className='grid-container-in pt-5'>
+			<Form></Form>
 			<ReadAllStudiesData key={`studies-${lastYear}`} allStudiesData={lastStudiesData} year={lastYear} />
 			<ReadAllStudiesData key={`studies-${year}`} allStudiesData={allStudiesData} year={year} />
 		</div>

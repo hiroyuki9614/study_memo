@@ -3,10 +3,12 @@ import React, { useRef, forwardRef } from 'react';
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { POST } from '../../../api/studies-memo/route';
 import { twJoin, twMerge } from 'tailwind-merge';
 import InputText from '../inputText/index';
+import InputTextArea from '../text-area';
 import Button from '../button/index';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 // クライアントサイドで大きさを制限
 type Size = 'base' | 'lg' | 'sm' | 'xl' | 'xs';
@@ -56,18 +58,14 @@ export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(({ 
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: { errors },
-	} = useForm(); // 追加
-
+	} = useForm<Inputs>();
+	const onSubmit: SubmitHandler<Inputs> = () => reset();
 	const handleShowModal = () => dialogRef.current?.showModal();
 	const handleCloseModal = () => dialogRef.current?.close();
 	const iconComponent = icon ? <FontAwesomeIcon className={twJoin(children && 'flex-none')} fixedWidth={true} icon={icon} size='xl' /> : null;
 
-	const onSubmit = (data) => {
-		console.log(data);
-		// ここでフォームデータの処理を行う
-		handleCloseModal();
-	};
 	return (
 		<>
 			<button ref={ref} type={type} className={twMerge('', icon && (children ? `${ICON_SIZES[size]} ${ICON_POSITION[iconPosition]}` : ICON_SIZES[size]), className)} onClick={handleShowModal} {...props}>
@@ -78,12 +76,13 @@ export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(({ 
 				<div className='flex justify-center mt-5'>
 					<h1>HELLO MODAL !!</h1>
 				</div>
-				<Button className='h-[1px]' type='button' onClick={handleCloseModal}>
-					Close Modal
-				</Button>
-				<form onSubmit={handleSubmit(onSubmit)}>
-					<InputText id='title' title='Title' name='title' register={register} errors={errors} required={true} type='text' />
-					<Button type='submit'>Submit</Button> {/* 追加 */}
+				<form action={POST}>
+					<InputText id='studyTitle' title='タイトル' name='title' register={register} errors={errors} type='text' required />
+					<InputText id='studyDuration' title='学習時間' name='duration' register={register} errors={errors} type='number' required />
+					<InputTextArea id='studyDescription' title='学習内容' name='description' register={register} errors={errors} required />
+					<Button type='submit' variant='primary' onClick={() => reset()}>
+						送信
+					</Button>
 				</form>
 				<Button type='button' onClick={handleCloseModal}>
 					Close Modal
