@@ -1,6 +1,6 @@
 'use client';
 
-import { UseFormRegister, FieldErrors } from 'react-hook-form';
+import { UseFormRegister, FieldErrors, RegisterOptions } from 'react-hook-form';
 
 type FormType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'date' | 'checkbox' | 'radio' | 'file' | 'submit';
 
@@ -13,23 +13,27 @@ type InputProps = {
 	register: UseFormRegister<any>;
 	errors: FieldErrors;
 	required?: boolean;
-	onChange?: () => void;
+	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	type: FormType;
+	registerOptions?: RegisterOptions;
 };
 
-export const InputText = ({ id, title, name, register, errors, required, onChange, type }: InputProps) => {
+export const InputText = ({ id, title, name, register, errors, required, onChange, type, registerOptions }: InputProps) => {
 	return (
 		<div>
 			<label htmlFor={id}>{title}</label>
 			<input
 				id={id}
-				{...register(name, { required })}
+				{...register(name, {
+					required,
+					...registerOptions,
+					onChange: (e) => {
+						if (onChange) onChange(e);
+					},
+				})}
 				className='border flex flex-col'
-				onChange={(e) => {
-					register(name).onChange(e); // React Hook Form の onChange を呼び出す
-					onChange && onChange(); // カスタムの onChange を呼び出す
-				}}
 				type={type}
+				name={name}
 			/>
 			{errors[name] && <span>This field is required</span>}
 		</div>

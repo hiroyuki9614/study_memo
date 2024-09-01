@@ -8,6 +8,8 @@ import Button from '../button';
 
 type Inputs = {
 	title: string;
+	duration: number;
+	description: string;
 	// 他のフィールドもここに追加
 };
 
@@ -22,10 +24,9 @@ export default function CreateStudiesMemo() {
 
 	return (
 		<form action={POST}>
-			{/* <InputText id='studyTitle' title='タイトル' name='title' register={register} errors={errors} type='text' required />
+			<InputText id='studyTitle' title='タイトル' name={'title'} register={register} errors={errors} type='text' required />
 			<InputText id='studyDuration' title='学習時間' name='duration' register={register} errors={errors} type='number' required />
-			<InputTextArea id='studyDescription' title='学習内容' name='description' register={register} errors={errors} required /> */}
-			<input type='text' name='title' />
+			<InputTextArea id='studyDescription' title='学習内容' name='description' register={register} errors={errors} required />
 			<Button icon={faUser} type='submit' variant='primary' onClick={() => reset()}>
 				送信
 			</Button>
