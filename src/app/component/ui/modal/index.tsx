@@ -35,6 +35,12 @@ export const ICON_POSITION: Record<'left' | 'right' | 'top', string> = {
 	top: 'flex-col',
 };
 
+type Inputs = {
+	title: string;
+	duration: number;
+	description: string;
+};
+
 type MaybeIcon = {
 	children: ReactNode;
 	icon?: IconProp;
@@ -54,6 +60,7 @@ type DialogSampleProps = ButtonHTMLAttributes<HTMLButtonElement> &
 	};
 
 export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(({ children, className, icon, iconPosition = 'left', size = 'base', type = 'button', variant = 'primary', ...props }, ref) => {
+	const formRef = useRef<HTMLFormElement>(null);
 	const dialogRef = useRef<HTMLDialogElement>(null);
 	const {
 		register,
@@ -61,10 +68,19 @@ export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(({ 
 		reset,
 		formState: { errors },
 	} = useForm<Inputs>();
-	const onSubmit: SubmitHandler<Inputs> = () => reset();
 	const handleShowModal = () => dialogRef.current?.showModal();
 	const handleCloseModal = () => dialogRef.current?.close();
 	const iconComponent = icon ? <FontAwesomeIcon className={twJoin(children && 'flex-none')} fixedWidth={true} icon={icon} size='xl' /> : null;
+	const onSubmit: SubmitHandler<Inputs> = async (data) => {
+		if (formRef.current) {
+			const formData = new FormData(formRef.current);
+			const result = await POST(formData);
+			if (result.message === 'success') {
+				dialogRef.current?.close();
+				reset();
+			}
+		}
+	};
 
 	return (
 		<>
@@ -76,11 +92,11 @@ export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(({ 
 				<div className='flex justify-center mt-5'>
 					<h1>HELLO MODAL !!</h1>
 				</div>
-				<form action={POST}>
+				<form ref={formRef} action={POST} onSubmit={handleSubmit(onSubmit)}>
 					<InputText id='studyTitle' title='タイトル' name='title' register={register} errors={errors} type='text' required />
 					<InputText id='studyDuration' title='学習時間' name='duration' register={register} errors={errors} type='number' required />
 					<InputTextArea id='studyDescription' title='学習内容' name='description' register={register} errors={errors} required />
-					<Button type='submit' variant='primary' onClick={() => reset()}>
+					<Button type='submit' variant='primary'>
 						送信
 					</Button>
 				</form>

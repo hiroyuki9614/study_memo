@@ -44,7 +44,6 @@ const App = async () => {
 	const lastStudiesData = await getStudiesDataLastYear();
 	return (
 		<div className='grid-container-in pt-5'>
-			<Form />
 			<ReadAllStudiesData key={`studies-${lastYear}`} allStudiesData={lastStudiesData} year={lastYear} />
 			<ReadAllStudiesData key={`studies-${year}`} allStudiesData={allStudiesData} year={year} />
 		</div>
