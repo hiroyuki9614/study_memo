@@ -52,19 +52,19 @@ export default function Statics() {
 				<h1 className='font-bold mb-1'>最も多く勉強した内容</h1>
 				<div className='mb-2 flex justify-center items-center w-10/12 h-11 border rounded-2xl bg-slate-200 shadow-lg'>
 					<p className='flex items-center'>
-						<span className='font-semibold'>連続学習記録</span>
+						<span className='font-semibold'>JavaScript</span>
 						<span className='text-lg ml-4'>9999times</span>
 					</p>
 				</div>
 				<div className='mb-2 flex justify-center items-center w-10/12 h-11 border rounded-2xl bg-slate-200 shadow-lg'>
 					<p className='flex items-center'>
-						<span className='font-semibold'>連続学習記録</span>
+						<span className='font-semibold'>Ruby</span>
 						<span className='text-lg ml-4'>9999times</span>
 					</p>
 				</div>
 				<div className='flex justify-center items-center w-10/12 h-11 border rounded-2xl bg-slate-200 shadow-lg'>
 					<p className='flex items-center'>
-						<span className='font-semibold'>連続学習記録</span>
+						<span className='font-semibold'>Python</span>
 						<span className='text-lg ml-4'>9999times</span>
 					</p>
 				</div>
