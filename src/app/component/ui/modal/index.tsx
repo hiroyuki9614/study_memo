@@ -88,7 +88,7 @@ export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(({ 
 				{iconComponent}
 				<p className='text-xs mt-1'>{children}</p>
 			</button>
-			<dialog ref={dialogRef} className='w-10/12 h-4/5'>
+			<dialog ref={dialogRef} className='w-4/12 h-4/5'>
 				<div className='flex justify-center mt-5'>
 					<h1>HELLO MODAL !!</h1>
 				</div>
