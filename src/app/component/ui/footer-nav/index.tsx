@@ -18,9 +18,7 @@ export default function FooterNav() {
 				</li>
 				<li className='w-1/3'>
 					<div className='flex flex-col items-center'>
-						<DialogSample icon={faPlus} size={'2x'}>
-							ADD
-						</DialogSample>
+						<DialogSample icon={faPlus}>ADD</DialogSample>
 					</div>
 				</li>
 				<li className='w-1/3'>
