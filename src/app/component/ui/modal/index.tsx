@@ -9,6 +9,7 @@ import InputText from '../inputText/index';
 import InputTextArea from '../text-area';
 import Button from '../button/index';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import SelectInput from '../selectInput';
 
 // クライアントサイドで大きさを制限
 type Size = 'base' | 'lg' | 'sm' | 'xl' | 'xs';
@@ -62,6 +63,11 @@ type DialogSampleProps = ButtonHTMLAttributes<HTMLButtonElement> &
 export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(({ children, className, icon, iconPosition = 'left', size = 'base', type = 'button', variant = 'primary', ...props }, ref) => {
 	const formRef = useRef<HTMLFormElement>(null);
 	const dialogRef = useRef<HTMLDialogElement>(null);
+	const options = [
+		{ value: 'JavaScript', option: 'JavaScript' },
+		{ value: 'TypeScript', option: 'TypeScript' },
+		{ value: 'Python', option: 'Python' },
+	];
 	const {
 		register,
 		handleSubmit,
@@ -96,6 +102,7 @@ export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(({ 
 					<InputText id='studyTitle' title='タイトル' name='title' register={register} errors={errors} type='text' required />
 					<InputText id='studyDuration' title='学習時間' name='duration' register={register} errors={errors} type='number' required />
 					<InputTextArea id='studyDescription' title='学習内容' name='description' register={register} errors={errors} required />
+					<SelectInput id='studyTitle' title='タイトル' name='title' register={register} errors={errors} required />
 					<Button type='submit' variant='primary'>
 						送信
 					</Button>
