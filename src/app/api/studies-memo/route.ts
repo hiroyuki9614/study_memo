@@ -10,6 +10,7 @@ interface CreateStudyMemoRequest {
 	title: string;
 	description: string;
 	duration: number;
+	category: string;
 }
 // Study memo取得
 export const GET = async (req: Request, res: NextResponse) => {
@@ -29,6 +30,7 @@ export const POST = async (createPost: any) => {
 	const duration = parseInt(createPost.get('duration') as string, 10);
 	const title = createPost.get('title');
 	const description = createPost.get('description');
+	const category = createPost.get('category');
 	try {
 		await connectDB();
 		const studies_memo = await prisma.study_memo.create({
@@ -36,6 +38,7 @@ export const POST = async (createPost: any) => {
 				title,
 				description,
 				duration,
+				category,
 			},
 		});
 		revalidatePath('/');

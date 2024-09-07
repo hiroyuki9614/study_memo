@@ -11,6 +11,7 @@ type Inputs = {
 	title: string;
 	duration: number;
 	description: string;
+	category: string;
 };
 
 export default function CreateStudiesMemo() {

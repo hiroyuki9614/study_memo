@@ -2,7 +2,7 @@
 
 import { UseFormRegister, FieldErrors, RegisterOptions } from 'react-hook-form';
 
-type NameType = 'title' | 'duration' | 'description';
+type NameType = 'category';
 
 type InputProps = {
 	id: string;

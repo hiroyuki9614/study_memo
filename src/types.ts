@@ -3,4 +3,5 @@ export type StudyMemoType = {
 	title: string;
 	duration: string;
 	description: string;
+	category: string;
 };

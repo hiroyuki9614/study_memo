@@ -40,6 +40,7 @@ type Inputs = {
 	title: string;
 	duration: number;
 	description: string;
+	category: string;
 };
 
 type MaybeIcon = {
@@ -102,7 +103,7 @@ export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(({ 
 					<InputText id='studyTitle' title='タイトル' name='title' register={register} errors={errors} type='text' required />
 					<InputText id='studyDuration' title='学習時間' name='duration' register={register} errors={errors} type='number' required />
 					<InputTextArea id='studyDescription' title='学習内容' name='description' register={register} errors={errors} required />
-					<SelectInput id='studyTitle' title='タイトル' name='title' register={register} errors={errors} options={options} required />
+					<SelectInput id='studyTitle' title='カテゴリー' name='category' register={register} errors={errors} options={options} required />
 					<Button type='submit' variant='primary'>
 						送信
 					</Button>

@@ -7,7 +7,8 @@ const prisma = new PrismaClient();
 interface CreateStudyMemoRequest {
 	title: string;
 	description: string;
-	duration: number; // フロントエンドから文字列として送信される可能性があるため
+	duration: number;
+	category: string;
 }
 
 // Study memo Read取得
