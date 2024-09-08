@@ -1,21 +1,42 @@
 'use client';
-import React from 'react';
-
+import React, { useState, useEffect } from 'react';
 import { ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const data = [
-	{ date: '2023-01-01', totalHours: 5, averageHours: 3 },
-	{ date: '2023-01-02', totalHours: 7, averageHours: 4 },
-	{ date: '2023-01-01', totalHours: 5, averageHours: 3 },
-	{ date: '2023-01-02', totalHours: 7, averageHours: 4 },
-	{ date: '2023-01-01', totalHours: 5, averageHours: 3 },
-	{ date: '2023-01-02', totalHours: 7, averageHours: 4 },
-	{ date: '2023-01-01', totalHours: 5, averageHours: 3 },
-	{ date: '2023-01-02', totalHours: 7, averageHours: 4 },
-	// ... more data
-];
+const Statics = () => {
+	const [allStudiesData, setAllStudiesData] = useState([]);
+	useEffect(() => {
+		const getStudiesDataThisYear = async () => {
+			const now = new Date();
+			const year = now.getFullYear();
+			const startDate = year + '-01-01';
+			const endDate = year + '-12-31';
+			console.log(startDate);
+			try {
+				const response = await fetch(`http://localhost:3000/api/studies-memo-monthly?startDate=${startDate}&endDate=${endDate}`, { cache: 'no-store' });
+				const jsonData = await response.json();
+				const StudiesDataThisYear = jsonData.studies_memo;
+				setAllStudiesData(StudiesDataThisYear);
+			} catch (err) {
+				console.error(err);
+				setAllStudiesData([]);
+			}
+		};
 
-export default function Statics() {
+		getStudiesDataThisYear();
+	}, []);
+
+	const data = [
+		{ date: 'Jan', totalHours: 5, averageHours: 3 },
+		{ date: 'Feb', totalHours: 7, averageHours: 4 },
+		{ date: 'Mar', totalHours: 5, averageHours: 3 },
+		{ date: 'May', totalHours: 7, averageHours: 4 },
+		{ date: 'Jul', totalHours: 5, averageHours: 3 },
+		{ date: 'Aug', totalHours: 7, averageHours: 4 },
+		{ date: 'Sep', totalHours: 5, averageHours: 3 },
+		{ date: 'Oct', totalHours: 7, averageHours: 4 },
+		{ date: 'Nov', totalHours: 5, averageHours: 3 },
+		{ date: 'Dec', totalHours: 5, averageHours: 3 },
+	];
 	return (
 		<main className='flex justify-center flex-col'>
 			<h1 className='text-center mt-1'>学習の統計</h1>
@@ -34,7 +55,7 @@ export default function Statics() {
 				</div>
 			</article>
 			<article className='flex justify-center mt-5'>
-				<div className='w-full max-w-md'>
+				<div className='w-full max-w-lg'>
 					<ResponsiveContainer width='100%' height={200}>
 						<ComposedChart data={data}>
 							<CartesianGrid strokeDasharray='3 3' />
@@ -71,4 +92,6 @@ export default function Statics() {
 			</article>
 		</main>
 	);
-}
+};
+
+export default Statics;

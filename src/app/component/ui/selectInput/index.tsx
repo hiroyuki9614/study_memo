@@ -12,11 +12,12 @@ type InputProps = {
 	errors: FieldErrors;
 	options: { value: string; option: string }[];
 	required?: boolean;
+	multiple?: boolean;
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	registerOptions?: RegisterOptions;
 };
 
-export const selectInput = ({ id, title, name, register, errors, options, required, onChange, registerOptions }: InputProps) => {
+export const selectInput = ({ id, title, name, register, errors, options, multiple, required, onChange, registerOptions }: InputProps) => {
 	return (
 		<div>
 			<label htmlFor={id}>{title}</label>
@@ -31,6 +32,7 @@ export const selectInput = ({ id, title, name, register, errors, options, requir
 				})}
 				className='border flex flex-col'
 				name={name}
+				multiple={multiple}
 			>
 				{options.map((option, index) => (
 					<option key={index} value={option.value}>

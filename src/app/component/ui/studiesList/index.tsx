@@ -15,6 +15,7 @@ interface StudyData {
 	title: string;
 	duration: number;
 	description: string;
+	category: string;
 	created_at: string;
 }
 
@@ -94,6 +95,10 @@ const ReadAllStudiesData: React.FC<MonthlyStudiesProps> = ({ allStudiesData, yea
 													<div className=''>
 														<dt>学習内容</dt>
 														<dd className='indent-4'>学習内容: {studyData.title}</dd>
+													</div>
+													<div className=''>
+														<dt>カテゴリー</dt>
+														<dd className='indent-4'>学習カテゴリー: {studyData.category}</dd>
 													</div>
 												</dl>
 											</li>
