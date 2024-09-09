@@ -5,25 +5,41 @@ import { ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 const Statics = () => {
 	const [allStudiesData, setAllStudiesData] = useState([]);
 	useEffect(() => {
-		const getStudiesDataThisYear = async () => {
-			const now = new Date();
-			const year = now.getFullYear();
-			const startDate = year + '-01-01';
-			const endDate = year + '-12-31';
-			console.log(startDate);
+		const getStudiesData = async () => {
 			try {
-				const response = await fetch(`http://localhost:3000/api/studies-memo-monthly?startDate=${startDate}&endDate=${endDate}`, { cache: 'no-store' });
+				const response = await fetch(`http://localhost:3000/api/studies-memo`, { cache: 'no-store' });
 				const jsonData = await response.json();
-				const StudiesDataThisYear = jsonData.studies_memo;
-				setAllStudiesData(StudiesDataThisYear);
+				const StudiesData = jsonData.studies_memo;
+				setAllStudiesData(StudiesData);
 			} catch (err) {
 				console.error(err);
 				setAllStudiesData([]);
 			}
 		};
 
-		getStudiesDataThisYear();
+		getStudiesData();
 	}, []);
+	console.log({ allStudiesData });
+
+	// durationの合計を計算
+	const totalDuration = allStudiesData.reduce((sum, item) => sum + item.duration, 0);
+
+	console.log(totalDuration); // 総学習時間（時間単位）
+
+	const totalStudyDays = () => {
+		// 日付のみを抽出し、重複を除去
+		const uniqueDates = new Set(allStudiesData.map((item) => item.study_date.split('T')[0]));
+
+		// 重複を除いた日付の数をカウント
+		return uniqueDates.size;
+	};
+
+	const totalDays = totalStudyDays();
+	// console.log(`合計学習日数: ${totalDays}日`);
+	// 日付の重複削除
+	// const sortedDates = [...new Set(dates.map(d => d.toDateString()))]
+	// .map(d => new Date(d))
+	// .sort((a, b) => b - a);
 
 	const data = [
 		{ date: 'Jan', totalHours: 5, averageHours: 3 },
@@ -39,15 +55,15 @@ const Statics = () => {
 	];
 	return (
 		<main className='flex justify-center flex-col'>
-			<h1 className='text-center mt-1'>学習の統計</h1>
+			<h1 className='font-bold text-center mb-1'>学習の統計</h1>
 			<article className='flex justify-center mt-2'>
 				<div className='mr-3 flex flex-col justify-center items-center'>
-					<p className='text-center'>連続学習記録</p>
-					<p className='text-center font-semibold border rounded-2xl bg-slate-200 shadow-lg w-24 h-10 flex items-center justify-center'>999days</p>
+					<p className='text-center'>学習した合計日数</p>
+					<p className='text-center font-semibold border rounded-2xl bg-slate-200 shadow-lg w-24 h-10 flex items-center justify-center'>{totalDays} d</p>
 				</div>
 				<div className='mr-3 ml-2 flex flex-col justify-center items-center'>
 					<p className='text-center'>今年の学習時間</p>
-					<p className='text-center font-semibold border rounded-2xl bg-slate-200 shadow-lg w-24 h-10 flex items-center justify-center'>9999h</p>
+					<p className='text-center font-semibold border rounded-2xl bg-slate-200 shadow-lg w-24 h-10 flex items-center justify-center'>{totalDuration} h</p>
 				</div>
 				<div className='ml-3 flex flex-col justify-center items-center'>
 					<p className='text-center'>平均学習時間</p>
