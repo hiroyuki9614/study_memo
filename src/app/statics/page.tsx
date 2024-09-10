@@ -41,6 +41,23 @@ const Statics = () => {
 	// .map(d => new Date(d))
 	// .sort((a, b) => b - a);
 
+	const calculateAverageStudyTime = () => {
+		if (allStudiesData.length === 0) return 0; // データがない場合は0を返す
+
+		const totalDuration = allStudiesData.reduce((sum, item) => sum + item.duration, 0);
+		const averageDuration = totalDuration / allStudiesData.length;
+
+		// 小数点以下1桁に丸める
+		return Math.round(averageDuration * 10) / 10;
+	};
+
+	const getMostFrequentCategory = () => {
+		if (allStudiesData.length === 0) return 0; // データがない場合は0を返す
+	};
+
+	const averageStudyTime = calculateAverageStudyTime();
+	console.log(`平均学習時間: ${averageStudyTime}時間`);
+
 	const data = [
 		{ date: 'Jan', totalHours: 5, averageHours: 3 },
 		{ date: 'Feb', totalHours: 7, averageHours: 4 },
@@ -67,7 +84,7 @@ const Statics = () => {
 				</div>
 				<div className='ml-3 flex flex-col justify-center items-center'>
 					<p className='text-center'>平均学習時間</p>
-					<p className='text-center font-semibold border border-solid rounded-2xl bg-slate-200 shadow-lg w-24 h-10 flex items-center justify-center'>999h</p>
+					<p className='text-center font-semibold border border-solid rounded-2xl bg-slate-200 shadow-lg w-24 h-10 flex items-center justify-center'>{averageStudyTime} h</p>
 				</div>
 			</article>
 			<article className='flex justify-center mt-5'>
