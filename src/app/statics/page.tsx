@@ -70,6 +70,38 @@ const Statics = () => {
 		{ date: 'Nov', totalHours: 5, averageHours: 3 },
 		{ date: 'Dec', totalHours: 5, averageHours: 3 },
 	];
+
+	function organizeDataByMonth(allStudiesData) {
+		// 月の略称マッピング
+		const monthAbbreviations = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+		// すべての月について初期データを作成
+		const monthlyData = monthAbbreviations.reduce((acc, month) => {
+			acc[month] = { totalHours: 0, studyCount: 0 };
+			return acc;
+		}, {});
+
+		allStudiesData.forEach((study) => {
+			const date = new Date(study.study_date);
+			const monthKey = monthAbbreviations[date.getMonth()];
+
+			monthlyData[monthKey].totalHours += study.duration;
+			monthlyData[monthKey].studyCount += 1;
+		});
+
+		// 平均を計算し、指定された形式に変換
+		const formattedData = monthAbbreviations.map((month) => ({
+			date: month,
+			totalHours: Number((monthlyData[month].totalHours / 60).toFixed(2)),
+			averageHours: monthlyData[month].studyCount > 0 ? Number((monthlyData[month].totalHours / monthlyData[month].studyCount / 60).toFixed(2)) : 0,
+		}));
+
+		return formattedData;
+	}
+
+	const formattedMonthlyData = organizeDataByMonth(allStudiesData);
+	console.log(formattedMonthlyData);
+
 	return (
 		<main className='flex justify-center flex-col'>
 			<h1 className='font-bold text-center mb-1'>学習の統計</h1>
@@ -90,7 +122,7 @@ const Statics = () => {
 			<article className='flex justify-center mt-5'>
 				<div className='w-full max-w-lg'>
 					<ResponsiveContainer width='100%' height={200}>
-						<ComposedChart data={data}>
+						<ComposedChart data={formattedMonthlyData}>
 							<CartesianGrid strokeDasharray='3 3' />
 							<XAxis dataKey='date' />
 							<YAxis yAxisId='left' />
