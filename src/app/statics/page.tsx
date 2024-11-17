@@ -93,11 +93,38 @@ const Statics = () => {
 		const formattedData = monthAbbreviations.map((month) => ({
 			date: month,
 			totalHours: Number((monthlyData[month].totalHours / 60).toFixed(2)),
-			averageHours: monthlyData[month].studyCount > 0 ? Number((monthlyData[month].totalHours / monthlyData[month].studyCount / 60).toFixed(2)) : 0,
+			averageHours:
+				monthlyData[month].studyCount > 0
+					? Number((monthlyData[month].totalHours / monthlyData[month].studyCount / 60).toFixed(2))
+					: 0,
 		}));
 
 		return formattedData;
 	}
+
+	const getMostFrequentCategories = () => {
+		if (allStudiesData.length === 0) return [];
+
+		// カテゴリーごとの出現回数をカウント
+		const categoryCount = allStudiesData.reduce((acc, item) => {
+			const category = item.category || '未分類'; // 空のカテゴリーは「未分類」として扱う
+			acc[category] = (acc[category] || 0) + 1;
+			return acc;
+		}, {});
+
+		// 出現回数でソートした配列に変換
+		const sortedCategories = Object.entries(categoryCount)
+			.map(([category, count]) => ({
+				category,
+				count,
+			}))
+			.sort((a, b) => b.count - a.count); // 降順でソート
+
+		return sortedCategories;
+	};
+
+	// 使用部分
+	const categoryRanking = getMostFrequentCategories();
 
 	const formattedMonthlyData = organizeDataByMonth(allStudiesData);
 	console.log(formattedMonthlyData);
@@ -108,15 +135,21 @@ const Statics = () => {
 			<article className='flex justify-center mt-2'>
 				<div className='mr-3 flex flex-col justify-center items-center'>
 					<p className='text-center'>学習した合計日数</p>
-					<p className='text-center font-semibold border rounded-2xl bg-slate-200 shadow-lg w-24 h-10 flex items-center justify-center'>{totalDays} d</p>
+					<p className='text-center font-semibold border rounded-2xl bg-slate-200 shadow-lg w-24 h-10 flex items-center justify-center'>
+						{totalDays} d
+					</p>
 				</div>
 				<div className='mr-3 ml-2 flex flex-col justify-center items-center'>
 					<p className='text-center'>今年の学習時間</p>
-					<p className='text-center font-semibold border rounded-2xl bg-slate-200 shadow-lg w-24 h-10 flex items-center justify-center'>{totalDuration} h</p>
+					<p className='text-center font-semibold border rounded-2xl bg-slate-200 shadow-lg w-24 h-10 flex items-center justify-center'>
+						{totalDuration} h
+					</p>
 				</div>
 				<div className='ml-3 flex flex-col justify-center items-center'>
 					<p className='text-center'>平均学習時間</p>
-					<p className='text-center font-semibold border border-solid rounded-2xl bg-slate-200 shadow-lg w-24 h-10 flex items-center justify-center'>{averageStudyTime} h</p>
+					<p className='text-center font-semibold border border-solid rounded-2xl bg-slate-200 shadow-lg w-24 h-10 flex items-center justify-center'>
+						{averageStudyTime} h
+					</p>
 				</div>
 			</article>
 			<article className='flex justify-center mt-5'>
@@ -136,24 +169,17 @@ const Statics = () => {
 			</article>
 			<article className='flex justify-center flex-col items-center'>
 				<h1 className='font-bold mb-1'>最も多く勉強した内容</h1>
-				<div className='mb-4 flex justify-center items-center w-10/12 h-11 border rounded-2xl bg-slate-200 shadow-lg'>
-					<p className='flex items-center'>
-						<span className='font-semibold'>JavaScript</span>
-						<span className='text-lg ml-4'>9999times</span>
-					</p>
-				</div>
-				<div className='mb-4 flex justify-center items-center w-10/12 h-11 border rounded-2xl bg-slate-200 shadow-lg'>
-					<p className='flex items-center'>
-						<span className='font-semibold'>Ruby</span>
-						<span className='text-lg ml-4'>9999times</span>
-					</p>
-				</div>
-				<div className='flex justify-center items-center w-10/12 h-11 border rounded-2xl bg-slate-200 shadow-lg'>
-					<p className='flex items-center'>
-						<span className='font-semibold'>Python</span>
-						<span className='text-lg ml-4'>9999times</span>
-					</p>
-				</div>
+				{categoryRanking.map((item, index) => (
+					<div
+						key={item.category}
+						className='mb-4 flex justify-center items-center w-10/12 h-11 border rounded-2xl bg-slate-200 shadow-lg'
+					>
+						<p className='flex items-center'>
+							<span className='font-semibold'>{item.category}</span>
+							<span className='text-lg ml-4'>{item.count} times</span>
+						</p>
+					</div>
+				))}
 			</article>
 		</main>
 	);

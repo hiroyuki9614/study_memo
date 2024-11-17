@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef, forwardRef } from 'react';
+import React, { useRef, forwardRef, useEffect } from 'react';
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -61,60 +61,137 @@ type DialogSampleProps = ButtonHTMLAttributes<HTMLButtonElement> &
 		variant?: string;
 	};
 
-export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(({ children, className, icon, iconPosition = 'left', size = 'base', type = 'button', variant = 'primary', ...props }, ref) => {
-	const formRef = useRef<HTMLFormElement>(null);
-	const dialogRef = useRef<HTMLDialogElement>(null);
-	const options = [
-		{ value: 'JavaScript', option: 'JavaScript' },
-		{ value: 'TypeScript', option: 'TypeScript' },
-		{ value: 'Python', option: 'Python' },
-	];
-	const {
-		register,
-		handleSubmit,
-		reset,
-		formState: { errors },
-	} = useForm<Inputs>();
-	const handleShowModal = () => dialogRef.current?.showModal();
-	const handleCloseModal = () => dialogRef.current?.close();
-	const iconComponent = icon ? <FontAwesomeIcon className={twJoin(children && 'flex-none')} fixedWidth={true} icon={icon} size='xl' /> : null;
-	const onSubmit: SubmitHandler<Inputs> = async (data) => {
-		if (formRef.current) {
-			const formData = new FormData(formRef.current);
-			const result = await POST(formData);
-			if (result.message === 'success') {
-				dialogRef.current?.close();
-				reset();
+export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(
+	(
+		{ children, className, icon, iconPosition = 'left', size = 'base', type = 'button', variant = 'primary', ...props },
+		ref
+	) => {
+		const formRef = useRef<HTMLFormElement>(null);
+		const dialogRef = useRef<HTMLDialogElement>(null);
+		const options = [
+			{ value: 'JavaScript', option: 'JavaScript' },
+			{ value: 'TypeScript', option: 'TypeScript' },
+			{ value: 'Python', option: 'Python' },
+		];
+		const {
+			register,
+			handleSubmit,
+			reset,
+			formState: { errors },
+		} = useForm<Inputs>();
+		const handleShowModal = () => dialogRef.current?.showModal();
+		const handleCloseModal = () => dialogRef.current?.close();
+		const iconComponent = icon ? (
+			<FontAwesomeIcon className={twJoin(children && 'flex-none')} fixedWidth={true} icon={icon} size='xl' />
+		) : null;
+		const onSubmit: SubmitHandler<Inputs> = async (data) => {
+			if (formRef.current) {
+				const formData = new FormData(formRef.current);
+				const result = await POST(formData);
+				if (result.message === 'success') {
+					dialogRef.current?.close();
+					reset();
+				}
 			}
-		}
-	};
+		};
+		useEffect(() => {
+			const dialogElement = dialogRef.current;
 
-	return (
-		<>
-			<button ref={ref} type={type} className={twMerge('', icon && (children ? `${ICON_SIZES[size]} ${ICON_POSITION[iconPosition]}` : ICON_SIZES[size]), className)} onClick={handleShowModal} {...props}>
-				{iconComponent}
-				<p className='text-xs mt-1'>{children}</p>
-			</button>
-			<dialog ref={dialogRef} className='w-4/12 h-4/5'>
-				<div className='flex justify-center mt-5'>
-					<h1>HELLO MODAL !!</h1>
-				</div>
-				<form ref={formRef} action={POST} onSubmit={handleSubmit(onSubmit)}>
-					<InputText id='studyTitle' title='タイトル' name='title' register={register} errors={errors} type='text' required />
-					<InputText id='studyDuration' title='学習時間' name='duration' register={register} errors={errors} type='number' required />
-					<InputTextArea id='studyDescription' title='学習内容' name='description' register={register} errors={errors} required />
-					<SelectInput id='studyTitle' title='カテゴリー' name='category' register={register} errors={errors} options={options} required multiple />
-					<Button type='submit' variant='primary'>
-						送信
+			const handleClickOutside = (e: MouseEvent) => {
+				const dialog = dialogRef.current;
+				if (dialog) {
+					const dialogDimensions = dialog.getBoundingClientRect();
+					if (
+						e.clientX < dialogDimensions.left ||
+						e.clientX > dialogDimensions.right ||
+						e.clientY < dialogDimensions.top ||
+						e.clientY > dialogDimensions.bottom
+					) {
+						handleCloseModal();
+					}
+				}
+			};
+
+			if (dialogElement) {
+				dialogElement.addEventListener('click', handleClickOutside);
+			}
+
+			return () => {
+				if (dialogElement) {
+					dialogElement.removeEventListener('click', handleClickOutside);
+				}
+			};
+		}, []);
+
+		return (
+			<>
+				<button
+					ref={ref}
+					type={type}
+					className={twMerge(
+						'',
+						icon && (children ? `${ICON_SIZES[size]} ${ICON_POSITION[iconPosition]}` : ICON_SIZES[size]),
+						className
+					)}
+					onClick={handleShowModal}
+					{...props}
+				>
+					{iconComponent}
+					<p className='text-xs mt-1'>{children}</p>
+				</button>
+				<dialog ref={dialogRef} className='w-4/12 h-4/5' onClick={(e) => e.stopPropagation()}>
+					<div className='flex justify-center mt-5'>
+						<h1>HELLO MODAL !!</h1>
+					</div>
+					<form ref={formRef} action={POST} onSubmit={handleSubmit(onSubmit)}>
+						<InputText
+							id='studyTitle'
+							title='タイトル'
+							name='title'
+							register={register}
+							errors={errors}
+							type='text'
+							required
+						/>
+						<InputText
+							id='studyDuration'
+							title='学習時間'
+							name='duration'
+							register={register}
+							errors={errors}
+							type='number'
+							required
+						/>
+						<InputTextArea
+							id='studyDescription'
+							title='学習内容'
+							name='description'
+							register={register}
+							errors={errors}
+							required
+						/>
+						<SelectInput
+							id='studyTitle'
+							title='カテゴリー'
+							name='category'
+							register={register}
+							errors={errors}
+							options={options}
+							required
+							multiple
+						/>
+						<Button type='submit' variant='primary'>
+							送信
+						</Button>
+					</form>
+					<Button type='button' onClick={handleCloseModal}>
+						Close Modal
 					</Button>
-				</form>
-				<Button type='button' onClick={handleCloseModal}>
-					Close Modal
-				</Button>
-			</dialog>
-		</>
-	);
-});
+				</dialog>
+			</>
+		);
+	}
+);
 
 DialogSample.displayName = 'DialogSample';
 
