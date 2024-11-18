@@ -4,7 +4,7 @@ import { UseFormRegister, FieldErrors, RegisterOptions } from 'react-hook-form';
 
 type FormType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'date' | 'checkbox' | 'radio' | 'file' | 'submit';
 
-type NameType = 'title' | 'duration' | 'description';
+type NameType = 'title' | 'duration' | 'description' | 'password';
 
 type InputProps = {
 	id: string;
@@ -18,7 +18,17 @@ type InputProps = {
 	registerOptions?: RegisterOptions;
 };
 
-export const InputText = ({ id, title, name, register, errors, required, onChange, type, registerOptions }: InputProps) => {
+export const InputText = ({
+	id,
+	title,
+	name,
+	register,
+	errors,
+	required,
+	onChange,
+	type,
+	registerOptions,
+}: InputProps) => {
 	return (
 		<div>
 			<label htmlFor={id}>{title}</label>

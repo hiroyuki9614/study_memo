@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef, forwardRef, useEffect } from 'react';
+import React, { useRef, forwardRef, useEffect, useState } from 'react';
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -40,6 +40,7 @@ type Inputs = {
 	title: string;
 	duration: number;
 	description: string;
+	password: string;
 	category: string;
 };
 
@@ -66,6 +67,7 @@ export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(
 		{ children, className, icon, iconPosition = 'left', size = 'base', type = 'button', variant = 'primary', ...props },
 		ref
 	) => {
+		const [error, setError] = useState<string>('');
 		const formRef = useRef<HTMLFormElement>(null);
 		const dialogRef = useRef<HTMLDialogElement>(null);
 		const options = [
@@ -91,9 +93,12 @@ export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(
 				if (result.message === 'success') {
 					dialogRef.current?.close();
 					reset();
+				} else if (result.error) {
+					setError(result.error);
 				}
 			}
 		};
+
 		useEffect(() => {
 			const dialogElement = dialogRef.current;
 
@@ -140,11 +145,12 @@ export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(
 					<p className='text-xs mt-1'>{children}</p>
 				</button>
 				<dialog ref={dialogRef} className='w-4/5 h-4/5 rounded-xl' onClick={(e) => e.stopPropagation()}>
-					<div className='flex justify-center mt-10'>
+					<div className='flex justify-center mt-5'>
 						<h1 className='font-semibold text-lg'>学習内容を保存する</h1>
 					</div>
+					{error && <div className='text-red-500 text-center text-sm mt-2'>{error}</div>}
 					<form ref={formRef} action={POST} onSubmit={handleSubmit(onSubmit)}>
-						<div className='flex flex-col w-4/5 mx-auto mt-8'>
+						<div className='flex flex-col w-4/5 mx-auto mt-4'>
 							<InputText
 								id='studyTitle'
 								title='タイトル'
@@ -171,6 +177,15 @@ export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(
 								errors={errors}
 								required
 							/>
+							<InputText
+								id='password'
+								title='パスワード'
+								name='password'
+								register={register}
+								errors={errors}
+								type='password'
+								required
+							/>
 							<SelectInput
 								id='studyTitle'
 								title='カテゴリー'
@@ -182,7 +197,7 @@ export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(
 								multiple
 							/>
 						</div>
-						<div className='flex justify-center pt-10'>
+						<div className='flex justify-center pt-8'>
 							<Button type='button' onClick={handleCloseModal} className='mr-5'>
 								閉じる
 							</Button>
