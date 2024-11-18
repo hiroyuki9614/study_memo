@@ -139,54 +139,58 @@ export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(
 					{iconComponent}
 					<p className='text-xs mt-1'>{children}</p>
 				</button>
-				<dialog ref={dialogRef} className='w-4/12 h-4/5' onClick={(e) => e.stopPropagation()}>
-					<div className='flex justify-center mt-5'>
-						<h1>HELLO MODAL !!</h1>
+				<dialog ref={dialogRef} className='w-4/5 h-4/5 rounded-xl' onClick={(e) => e.stopPropagation()}>
+					<div className='flex justify-center mt-10'>
+						<h1 className='font-semibold text-lg'>学習内容を保存する</h1>
 					</div>
 					<form ref={formRef} action={POST} onSubmit={handleSubmit(onSubmit)}>
-						<InputText
-							id='studyTitle'
-							title='タイトル'
-							name='title'
-							register={register}
-							errors={errors}
-							type='text'
-							required
-						/>
-						<InputText
-							id='studyDuration'
-							title='学習時間'
-							name='duration'
-							register={register}
-							errors={errors}
-							type='number'
-							required
-						/>
-						<InputTextArea
-							id='studyDescription'
-							title='学習内容'
-							name='description'
-							register={register}
-							errors={errors}
-							required
-						/>
-						<SelectInput
-							id='studyTitle'
-							title='カテゴリー'
-							name='category'
-							register={register}
-							errors={errors}
-							options={options}
-							required
-							multiple
-						/>
-						<Button type='submit' variant='primary'>
-							送信
-						</Button>
+						<div className='flex flex-col w-4/5 mx-auto mt-8'>
+							<InputText
+								id='studyTitle'
+								title='タイトル'
+								name='title'
+								register={register}
+								errors={errors}
+								type='text'
+								required
+							/>
+							<InputText
+								id='studyDuration'
+								title='学習時間'
+								name='duration'
+								register={register}
+								errors={errors}
+								type='number'
+								required
+							/>
+							<InputTextArea
+								id='studyDescription'
+								title='学習内容'
+								name='description'
+								register={register}
+								errors={errors}
+								required
+							/>
+							<SelectInput
+								id='studyTitle'
+								title='カテゴリー'
+								name='category'
+								register={register}
+								errors={errors}
+								options={options}
+								required
+								multiple
+							/>
+						</div>
+						<div className='flex justify-center pt-10'>
+							<Button type='button' onClick={handleCloseModal} className='mr-5'>
+								閉じる
+							</Button>
+							<Button type='submit' variant='primary' className='ml-5'>
+								保存
+							</Button>
+						</div>
 					</form>
-					<Button type='button' onClick={handleCloseModal}>
-						Close Modal
-					</Button>
 				</dialog>
 			</>
 		);

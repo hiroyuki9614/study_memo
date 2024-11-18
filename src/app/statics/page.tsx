@@ -134,7 +134,7 @@ const Statics = () => {
 			<h1 className='font-bold text-center mb-1'>学習の統計</h1>
 			<article className='flex justify-center mt-2'>
 				<div className='mr-3 flex flex-col justify-center items-center'>
-					<p className='text-center'>学習した合計日数</p>
+					<p className='text-center'>合計日数</p>
 					<p className='text-center font-semibold border rounded-2xl bg-slate-200 shadow-lg w-24 h-10 flex items-center justify-center'>
 						{totalDays} d
 					</p>
