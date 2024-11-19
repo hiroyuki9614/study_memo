@@ -157,6 +157,7 @@ export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(
 								name='title'
 								register={register}
 								errors={errors}
+								maxLength={255}
 								type='text'
 								required
 							/>
@@ -166,6 +167,7 @@ export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(
 								name='duration'
 								register={register}
 								errors={errors}
+								maxLength={255}
 								type='number'
 								required
 							/>
@@ -174,6 +176,7 @@ export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(
 								title='学習内容'
 								name='description'
 								register={register}
+								maxLength={1000}
 								errors={errors}
 								required
 							/>
@@ -183,6 +186,7 @@ export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(
 								name='password'
 								register={register}
 								errors={errors}
+								maxLength={10}
 								type='password'
 								required
 							/>
@@ -197,7 +201,7 @@ export const DialogSample = forwardRef<HTMLButtonElement, DialogSampleProps>(
 								multiple
 							/>
 						</div>
-						<div className='flex justify-center pt-8'>
+						<div className='flex justify-center py-8'>
 							<Button type='button' onClick={handleCloseModal} className='mr-5'>
 								閉じる
 							</Button>

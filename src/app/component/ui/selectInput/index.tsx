@@ -17,7 +17,18 @@ type InputProps = {
 	registerOptions?: RegisterOptions;
 };
 
-export const selectInput = ({ id, title, name, register, errors, options, multiple, required, onChange, registerOptions }: InputProps) => {
+export const selectInput = ({
+	id,
+	title,
+	name,
+	register,
+	errors,
+	options,
+	multiple,
+	required,
+	onChange,
+	registerOptions,
+}: InputProps) => {
 	return (
 		<div>
 			<label htmlFor={id}>{title}</label>
@@ -40,7 +51,7 @@ export const selectInput = ({ id, title, name, register, errors, options, multip
 					</option>
 				))}
 			</select>
-			{errors[name] && <span>This field is required</span>}
+			{errors[name] && <span className='text-red-700'>必須項目です。</span>}
 		</div>
 	);
 };

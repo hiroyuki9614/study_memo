@@ -13,6 +13,7 @@ type InputProps = {
 	register: UseFormRegister<any>;
 	errors: FieldErrors;
 	required?: boolean;
+	maxLength?: number;
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	type: FormType;
 	registerOptions?: RegisterOptions;
@@ -25,6 +26,7 @@ export const InputText = ({
 	register,
 	errors,
 	required,
+	maxLength,
 	onChange,
 	type,
 	registerOptions,
@@ -36,6 +38,12 @@ export const InputText = ({
 				id={id}
 				{...register(name, {
 					required,
+					maxLength: maxLength
+						? {
+								value: maxLength as number,
+								message: `${maxLength}文字以内で入力してください。`,
+						  }
+						: undefined,
 					...registerOptions,
 					onChange: (e) => {
 						if (onChange) onChange(e);
@@ -45,7 +53,12 @@ export const InputText = ({
 				type={type}
 				name={name}
 			/>
-			{errors[name] && <span>This field is required</span>}
+			<div className='flex flex-col'>
+				{errors[name] && <span className='text-red-700'>必須項目です。</span>}
+				{errors[name]?.type === 'maxLength' && (
+					<span className='text-red-700'>{errors[name]?.message?.toString()}</span>
+				)}
+			</div>
 		</div>
 	);
 };
