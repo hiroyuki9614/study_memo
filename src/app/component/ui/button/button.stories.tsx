@@ -14,10 +14,19 @@ type Story = StoryObj<typeof Button>;
 
 export const Default: Story = {
 	args: {
-		type: 'submit',
+		type: 'button',
 		variant: 'primary',
 		className: 'ml-5',
 		children: '保存',
+	},
+};
+
+export const Secondary: Story = {
+	args: {
+		type: 'button',
+		variant: 'secondary',
+		className: 'ml-5',
+		children: 'キャンセル',
 	},
 };
 
