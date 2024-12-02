@@ -68,3 +68,14 @@ export const IconOnly: Story = {
 		variant: 'primary',
 	},
 };
+
+export const Disable: Story = {
+	name: 'アイコンのみ', // 日本語名を追加
+	args: {
+		// ...baseArgs,
+		icon: faEdit,
+		size: 'base',
+		variant: 'primary',
+		disabled: true,
+	},
+};
