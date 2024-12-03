@@ -1,4 +1,5 @@
 'use client';
+import Loading from '@/app/loading';
 import React from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

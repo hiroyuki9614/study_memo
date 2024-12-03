@@ -32,7 +32,7 @@ export const ICON_POSITION: Record<'left' | 'right', string> = {
 	right: 'flex-row-reverse',
 };
 
-type Variant = 'custom' | 'primary' | 'secondary' | 'tertiary';
+type Variant = 'custom' | 'primary' | 'secondary' | 'tertiary' | 'disable';
 
 // ボタンの見た目を定義
 const VARIANTS: Record<Variant, string> = {
@@ -40,6 +40,7 @@ const VARIANTS: Record<Variant, string> = {
 	primary: 'border border-blue-400 bg-blue-500 text-white',
 	secondary: 'border border-blue-500 bg-white text-blue-500',
 	tertiary: 'border border-grey-600 bg-grey-500 text-gray',
+	disable: 'border border-grey-600 bg-grey-500 text-gray cursor-not-allowed',
 };
 
 type MaybeIcon = {

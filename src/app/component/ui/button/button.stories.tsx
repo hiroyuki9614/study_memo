@@ -70,12 +70,12 @@ export const IconOnly: Story = {
 };
 
 export const Disable: Story = {
-	name: 'アイコンのみ', // 日本語名を追加
+	name: 'ボタン非活性', // 日本語名を追加
 	args: {
 		// ...baseArgs,
 		icon: faEdit,
 		size: 'base',
-		variant: 'primary',
+		variant: 'disable',
 		disabled: true,
 	},
 };
