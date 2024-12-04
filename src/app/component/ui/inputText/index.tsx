@@ -9,7 +9,7 @@ type NameType = 'title' | 'duration' | 'description' | 'password';
 type InputProps = {
 	id: string;
 	title: string;
-	name: NameType;
+	name: string;
 	register: UseFormRegister<any>;
 	errors: FieldErrors;
 	required?: boolean;
