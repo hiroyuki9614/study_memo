@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 // import '../../../../globals.css';
 import Input from './index';
 import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { UseFormRegister, UseFormRegisterReturn } from 'react-hook-form';
 
 type Story = StoryObj<typeof Input>;
 
@@ -13,11 +14,12 @@ const meta: Meta<typeof Input> = {
 
 export default meta;
 
-const mockRegister = (name: string) => ({
-	onChange: () => {},
-	onBlur: () => {},
-	ref: () => {},
-	name: name,
+const mockRegister: UseFormRegister<any> = (name: any) => ({
+	onChange: async () => Promise.resolve(),
+	onBlur: async () => Promise.resolve(),
+	ref: (instance: HTMLInputElement | null) => {},
+	name,
+	disabled: false,
 });
 
 export const Default: Story = {
