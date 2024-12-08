@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+import 'whatwg-fetch';
 import '@testing-library/jest-dom/extend-expect';
 
 const nextJest = require('next/jest');
@@ -6,6 +7,12 @@ const nextJest = require('next/jest');
 const createJestConfig = nextJest({
 	dir: './',
 });
+
+global.fetch = jest.fn(() =>
+	Promise.resolve({
+		json: () => Promise.resolve([]),
+	})
+);
 
 const customJestConfig = {
 	testEnvironment: 'jest-environment-jsdom',
