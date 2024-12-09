@@ -3,13 +3,17 @@ import '@testing-library/jest-dom';
 import Home from '../src/app/page';
 import 'whatwg-fetch';
 
-global.fetch = jest.fn(() =>
+global.fetch = jest.fn().mockImplementation(() =>
 	Promise.resolve({
-		json: () =>
-			Promise.resolve({
-				studies_memo: [], // APIレスポンス形式に合わせる
-			}),
-	})
+		headers: new Headers(),
+		ok: true,
+		redirected: false,
+		status: 200,
+		statusText: 'OK',
+		type: 'basic',
+		url: '',
+		json: () => Promise.resolve({ studies_memo: [] }),
+	} as Response)
 );
 
 afterEach(() => {
