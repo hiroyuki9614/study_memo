@@ -1,6 +1,20 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Home from '../src/app/page';
+import 'whatwg-fetch';
+
+global.fetch = jest.fn(() =>
+	Promise.resolve({
+		json: () =>
+			Promise.resolve({
+				studies_memo: [], // APIレスポンス形式に合わせる
+			}),
+	})
+);
+
+afterEach(() => {
+	jest.restoreAllMocks();
+});
 
 describe('Home Component', () => {
 	it('should render year headings', async () => {
