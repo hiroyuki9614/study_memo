@@ -28,3 +28,11 @@ describe('Home Component', () => {
 		expect(screen.getByText('2023年の学習内容')).toBeInTheDocument();
 	});
 });
+
+const outOfRange = (num) => {
+	if (!(typeof num === 'number')) return true;
+	if (Math.round(num) != num) return true;
+	if (num < 1) return true;
+
+	return false;
+};
