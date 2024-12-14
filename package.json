@@ -17,6 +17,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@prisma/client": "^5.17.0",
+    "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.12",
