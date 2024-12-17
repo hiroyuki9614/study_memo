@@ -30,12 +30,13 @@ export const GET = async (req: Request, res: NextResponse) => {
 };
 
 // Study memo取得
-export const POST = async (createPost: FormData) => {
-	const duration = parseInt(createPost.get('duration')?.toString() || '0', 10);
-	const title = createPost.get('title')?.toString() || '';
-	const description = createPost.get('description')?.toString() || '';
-	const category = createPost.get('category')?.toString() || '';
-	const password = createPost.get('password')?.toString() || '';
+export const POST = async (req: NextRequest) => {
+	const formData = await req.formData();
+	const duration = parseInt(formData.get('duration')?.toString() || '0', 10);
+	const title = formData.get('title')?.toString() || '';
+	const description = formData.get('description')?.toString() || '';
+	const category = formData.get('category')?.toString() || '';
+	const password = formData.get('password')?.toString() || '';
 	const isValidPassword = await bcrypt.compare(password, CORRECT_PASSWORD_HASH);
 	if (!title || !description || !duration || !category || !password) {
 		return { error: '必須項目が入力されていません' };
