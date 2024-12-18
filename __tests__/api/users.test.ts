@@ -1,6 +1,6 @@
 import { testApiHandler } from 'next-test-api-route-handler';
 import * as appHandler from '@/app/api/studies-memo/route';
-import { prismaMock } from '../../mocks/prisma';
+import createPrismaMock from 'prisma-mock';
 
 describe('Study Memo API', () => {
 	const mockStudyMemo = {
@@ -15,7 +15,7 @@ describe('Study Memo API', () => {
 
 	beforeEach(() => {
 		// Prismaのモック
-		prismaMock.study_memo.findMany.mockResolvedValue([mockStudyMemo]);
+		createPrismaMock.study_memo.findMany.mockResolvedValue([mockStudyMemo]);
 	});
 
 	describe('GET', () => {
@@ -36,7 +36,7 @@ describe('Study Memo API', () => {
 
 	describe('POST', () => {
 		it('有効なデータで学習メモを作成できる', async () => {
-			prismaMock.study_memo.create.mockResolvedValue(mockStudyMemo);
+			createPrismaMock.study_memo.create.mockResolvedValue(mockStudyMemo);
 
 			const formData = new FormData();
 			formData.append('title', 'テスト学習');

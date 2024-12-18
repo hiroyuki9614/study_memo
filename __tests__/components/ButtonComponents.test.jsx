@@ -1,7 +1,7 @@
-// import '@testing-library/jest-dom';
-// import React from 'react';
-// import { render, screen, fireEvent } from '@testing-library/react';
-// import ButtonComponents from '../../src/app/components/ButtonComponent'
+import '@testing-library/jest-dom';
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import ButtonComponents from '../../src/app/component/ui/button/index'
 
 // describe('ButtonComponent', () => {
 //   it('ボタンをクリックするとテキストが変更される', () => {
