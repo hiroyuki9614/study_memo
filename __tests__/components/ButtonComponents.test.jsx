@@ -1,19 +1,87 @@
-import '@testing-library/jest-dom';
-import React from 'react';
+// __tests__/components/ui/Button.test.tsx
 import { render, screen, fireEvent } from '@testing-library/react';
-import ButtonComponents from '../../src/app/component/ui/button/index'
+import Button from '@/components/ui/button';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-describe('ButtonComponent', () => {
-  it('ボタンをクリックするとテキストが変更される', () => {
-    render(<ButtonComponents />);
+describe('Button Component', () => {
+  // 基本的なレンダリングテスト
+  it('テキストを正しくレンダリングする', () => {
+    render(<Button>Click me</Button>);
+    expect(screen.getByText('Click me')).toBeInTheDocument();
+  });
 
-    // 初期テキストの確認
-    expect(screen.getByText('初期テキスト')).toBeInTheDocument();
+  // サイズバリエーションのテスト
+  it.each(['xs', 'sm', 'base', 'lg', 'xl'] as const)(
+    'サイズ %s が正しく適用される',
+    (size) => {
+      render(<Button size={size}>Button</Button>);
+      const button = screen.getByRole('button');
+      expect(button).toHaveClass(SIZES[size]);
+    }
+  );
 
-    // ボタンのクリック
-    fireEvent.click(screen.getByText('ボタンをクリック'));
+  // バリアントのテスト
+  it.each(['primary', 'secondary', 'tertiary', 'disable'] as const)(
+    'バリアント %s が正しく適用される',
+    (variant) => {
+      render(<Button variant={variant}>Button</Button>);
+      const button = screen.getByRole('button');
+      expect(button).toHaveClass(VARIANTS[variant]);
+    }
+  );
 
-    // 更新されたテキストの確認
-    expect(screen.getByText('更新されたテキスト')).toBeInTheDocument();
+  // アイコンのテスト
+  it('アイコンが正しくレンダリングされる', () => {
+    render(<Button icon={faSearch}>Search</Button>);
+    expect(screen.getByRole('img', { hidden: true })).toBeInTheDocument();
+  });
+
+  // アイコン位置のテスト
+  it('アイコンの位置が正しく設定される', () => {
+    render(<Button icon={faSearch} iconPosition="right">Search</Button>);
+    const button = screen.getByRole('button');
+    expect(button).toHaveClass(ICON_POSITION.right);
+  });
+
+  // クリックイベントのテスト
+  it('クリックイベントが正しく発火する', () => {
+    const handleClick = jest.fn();
+    render(<Button onClick={handleClick}>Click me</Button>);
+    fireEvent.click(screen.getByText('Click me'));
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+
+  // disabled状態のテスト
+  it('disabled状態が正しく機能する', () => {
+    const handleClick = jest.fn();
+    render(<Button disabled onClick={handleClick}>Disabled</Button>);
+    const button = screen.getByRole('button');
+    expect(button).toBeDisabled();
+    fireEvent.click(button);
+    expect(handleClick).not.toHaveBeenCalled();
+  });
+
+  // カスタムクラスのテスト
+  it('カスタムクラスが正しく適用される', () => {
+    render(<Button className="custom-class">Button</Button>);
+    expect(screen.getByRole('button')).toHaveClass('custom-class');
+  });
+
+  // アイコンのみのテスト
+  it('アイコンのみのボタンが正しくレンダリングされる', () => {
+    render(<Button icon={faSearch} />);
+    expect(screen.getByRole('img', { hidden: true })).toBeInTheDocument();
+    expect(screen.getByRole('button')).toHaveClass(ICON_SIZES.base);
+  });
+
+  // type属性のテスト
+  it('デフォルトのtype属性が設定される', () => {
+    render(<Button>Button</Button>);
+    expect(screen.getByRole('button')).toHaveAttribute('type', 'button');
+  });
+
+  it('カスタムtype属性が設定される', () => {
+    render(<Button type="submit">Submit</Button>);
+    expect(screen.getByRole('button')).toHaveAttribute('type', 'submit');
   });
 });
